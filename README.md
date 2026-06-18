@@ -1,14 +1,14 @@
 <div align="center">
 
-  # OCR-MultiFrame-ICPR
+  # OCR-LOW-RESOLUTION-PLATE-ICPR
 
-  ### Multi-Frame License Plate Recognition with Fusion Ablations, Backbone Comparison, and Confidence-Aware Correction
+  ### Multi-Frame (5 frames) License Plate Recognition with Fusion Ablations, Backbone Comparison, and Confidence-Aware Correction
 
   <!-- General -->
   <h3>General</h3>
 
   <p>
-    <a href="https://github.com/minhthai-code/OCR-MultiFrame-ICPR"><img src="https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white&style=for-the-badge" alt="GitHub Repository"></a>
+    <a href="https://github.com/minhthai-code/OCR-ICPR-CHALLENGE"><img src="https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white&style=for-the-badge" alt="GitHub Repository"></a>
     <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.10+-2D3748?logo=python&logoColor=white&style=for-the-badge" alt="Python"></a>
     <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-1F2937?logo=apache&logoColor=white&style=for-the-badge" alt="License"></a>
     <a href="#"><img src="https://img.shields.io/badge/Type-Research_Code-374151?logo=academia&logoColor=white&style=for-the-badge" alt="Research Code"></a>
@@ -19,7 +19,7 @@
 
   <p>
     <a href="https://icpr26lrlpr.github.io/"><img src="https://img.shields.io/badge/ICPR_2026-Challenge-7F1D1D?logo=trophy&logoColor=white&style=for-the-badge" alt="ICPR 2026 Challenge"></a>
-    <a href="https://kaggle.com/your-kaggle-link-here"><img src="https://img.shields.io/badge/Kaggle-Training-1E3A5F?logo=kaggle&logoColor=white&style=for-the-badge" alt="Kaggle Training Notebook"></a>
+    <a href="https://www.kaggle.com/code/thitrnminh/ocr-icpr-training-notebook"><img src="https://img.shields.io/badge/Kaggle-Training-1E3A5F?logo=kaggle&logoColor=white&style=for-the-badge" alt="Kaggle Training Notebook"></a>
     <a href="#"><img src="https://img.shields.io/badge/Paper-Ablation_Study-164E63?logo=arxiv&logoColor=white&style=for-the-badge" alt="Paper"></a>
     <a href="#"><img src="https://img.shields.io/badge/Best_Accuracy-81.38%25-14532D?logo=checkmarx&logoColor=white&style=for-the-badge" alt="Best Accuracy"></a>
   </p>
@@ -34,12 +34,13 @@
 </div>
 
 ---
+![OCR-ICPR](assets/pic3.jpg)
 
 This repository contains the implementation and experiments for a research project by **[Tran Minh Thai](https://github.com/minhthai-code)** on recognizing license plates from **multiple low‑resolution frames**. The system is designed for the **[ICPR 2026 Low-Resolution License Plate Recognition challenge](https://icpr26lrlpr.github.io/)** and studies how temporal evidence, geometric rectification, and transformer‑based decoding can improve robustness under blur, compression, and motion distortion.
 
 ## Abstract
 
-![OCR-MultiFrame-ICPR](assets/pic1.jpg)
+![OCR-ICPR](assets/pic1.jpg)
 
 Low‑resolution license plate recognition is difficult because individual frames often contain incomplete strokes, heavy blur, motion distortion, or missing characters. In many cases, no single frame is sufficient, but a short sequence may contain complementary evidence. This project investigates whether recognition can be improved by aggregating evidence across a short frame sequence instead of relying on a single image. We propose a multi‑frame OCR pipeline with configurable backbone choices, optional spatial alignment, temporal fusion, and structured decoding. The repository is organised to support controlled ablations and reproducible competition experiments.
 > **What is the best way to exploit multiple noisy frames for license plate recognition under blur, compression, motion, and partial occlusion?**
@@ -173,7 +174,7 @@ All experiments use the same training protocol (30 epochs, batch size 64, AdamW,
 
 ### Part 1 — Does multi‑frame help?
 
-![OCR-MultiFrame-ICPR](assets/pic2.jpg)
+![OCR-ICPR](assets/pic2.jpg)
 
 Compare single‑frame vs. multi‑frame inside **each model family**. This answers: does using 5 frames improve over 1 frame?
 
@@ -308,7 +309,11 @@ python train_phase.py --model restran_multiframe --backbone proposed --use_stn t
 The current best validation result was obtained with the **proposed Lightweight Sequence-Oriented Conv-Transformer Encoder backbone** (Part 2, backbone comparison inside ResTran):
 
 ```bash
-python train_phase.py --model restran_multiframe --backbone proposed   # proposed lightweight backbone
+python train_phase.py \
+  --model restran_multiframe \
+  --backbone proposed \
+  --use_stn true \
+  --config-type final
 ```
 
 <div align="center">
@@ -361,8 +366,8 @@ All experiments are reported under a consistent setting.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/minhthai-code/OCR-MultiFrame-ICPR.git
-   cd OCR-MultiFrame-ICPR
+   git clone https://github.com/minhthai-code/OCR-ICPR-CHALLENGE.git
+   cd OCR-ICPR
    ```
 
 2. **Create a conda environment (optional but recommended)**
@@ -387,9 +392,18 @@ data/
 │   │   ├── annotations.json
 │   │   ├── hr-001.png ... hr-005.png
 │   │   └── lr-001.png ... lr-005.png
+│   ├── Scenario-A/
+│   │   ├── track_001/
+│   │   │   ├── annotations.json
+│   │   │   ├── hr-001.png ... hr-005.png
+│   │   │   └── lr-001.png ... lr-005.png
+│   │   ├── track_002
+│   │   └── ...
+│   ├── Scenario-B/
+│   │   ├── track_10000
+│   │   ├── track_10001
+│   │   └── ...
 │   └── ...
-└── val/
-    └── ...
 ```
 
 Each `annotations.json` contains the ground truth plate text:
@@ -409,7 +423,7 @@ Each `annotations.json` contains the ground truth plate text:
 ## Repository Structure
 
 ```
-OCR-MultiFrame-ICPR/
+OCR-ICPR/
 ├── configs/                  # Experiment configuration files
 │   └── pretrain_config.py    # configuration for every running
 ├── data/                     # Data for training
@@ -449,11 +463,11 @@ OCR-MultiFrame-ICPR/
 If you use this codebase or any of the proposed ideas in your research, please cite:
 
 ```bibtex
-@software{OCR-MultiFrame-ICPR-2026,
-  title={OCR-MultiFrame-ICPR: Multi-Frame License Plate Recognition},
+@software{OCR-ICPR-2026,
+  title={OCR-ICPR: Multi-Frame License Plate Recognition},
   author={Tran Minh Thai},
   year={2026},
-  url={https://github.com/minhthai-code/OCR-MultiFrame-ICPR}
+  url={https://github.com/minhthai-code/OCR-ICPR}
 }
 ```
 
