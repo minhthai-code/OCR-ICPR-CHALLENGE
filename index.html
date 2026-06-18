@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlateVision Pro — AI Recognition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #05080d;
+            --bg-panel: #0c121d;
+            --bg-surface: #131c2b;
+            --bg-accent: #1a263a;
+            --border-color: rgba(0, 212, 255, 0.15);
+            --cyan: #00d4ff;
+            --cyan-glow: rgba(0, 212, 255, 0.3);
+            --green: #00ff88;
+            --amber: #ffb400;
+            --red: #ff3b5c;
+            --text-main: #e2e8f0;
+            --text-dim: #718096;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+            --radius-lg: 16px;
+            --radius-md: 8px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--sans);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px), 
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        header {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: rgba(12, 18, 29, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--mono);
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 16px;
+        }
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--cyan);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+        .logo-mark svg { width: 18px; height: 18px; stroke: #000; }
+        .logo span { color: var(--cyan); }
+
+        .sys-status {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-family: var(--mono);
+            font-size: 11px;
+        }
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-surface);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            color: var(--text-dim);
+        }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); }
+        .dot.online { background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 300px 1fr 320px;
+            flex: 1;
+            overflow: hidden;
+            gap: 0;
+        }
+
+        .sidebar {
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sidebar-right {
+            border-right: none;
+            border-left: 1px solid var(--border-color);
+        }
+        .panel-header {
+            padding: 16px;
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--cyan);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .crop-gallery {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .crop-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        .crop-card:hover { border-color: var(--cyan); transform: translateX(4px); }
+        .crop-card.active { border-color: var(--cyan); box-shadow: 0 0 15px var(--cyan-glow); background: var(--bg-accent); }
+        .crop-card img { width: 100%; height: 70px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color); }
+        .crop-info { padding: 8px; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; }
+        .crop-text { font-weight: 700; color: var(--cyan); }
+        .crop-conf { color: var(--text-dim); }
+
+        .viewport {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-dark);
+            position: relative;
+        }
+        .video-stage {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            /* Changed to auto height to prevent forced stretching */
+            max-height: 80vh; 
+            background: #000;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #videoEl { 
+            max-width: 100%; 
+            max-height: 100%; 
+            /* This ensures no zooming or stretching */
+            object-fit: contain; 
+            display: block;
+        }
+        
+        #overlayCanvas { 
+            position: absolute; 
+            inset: 0; 
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none; 
+            object-fit: contain;
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            box-shadow: 0 0 15px var(--cyan);
+            top: 0;
+            left: 0;
+            z-index: 10;
+            animation: scan 3s linear infinite;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .scan-line.active { opacity: 1; }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+
+        .video-empty {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(12, 18, 29, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            color: var(--text-dim);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .bottom-bar {
+            height: 100px;
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border-color);
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .timeline-track {
+            flex: 1;
+            height: 6px;
+            background: var(--bg-surface);
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .timeline-progress {
+            position: absolute;
+            height: 100%;
+            background: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .timeline-info {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            min-width: 100px;
+            text-align: center;
+        }
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-family: var(--mono);
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .btn:hover { background: var(--bg-accent); border-color: var(--cyan); }
+        .btn-prim { background: var(--cyan); color: #000; border-color: var(--cyan); font-weight: 700; }
+        .btn-prim:hover { background: #fff; box-shadow: 0 0 15px var(--cyan-glow); }
+
+        .ocr-display {
+            padding: 24px 16px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-surface), transparent);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .ocr-text {
+            font-family: var(--mono);
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px var(--cyan-glow);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .conf-meter {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-dark);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .conf-fill { height: 100%; width: 0%; background: var(--cyan); transition: width 0.4s ease; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 16px;
+        }
+        .stat-card {
+            background: var(--bg-surface);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .stat-val { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--cyan); display: block; }
+        .stat-lbl { font-size: 9px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; }
+
+        .model-list {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .model-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--mono);
+            font-size: 10px;
+            padding: 8px;
+            background: var(--bg-surface);
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+        .model-item.active { border-color: var(--green); color: var(--green); }
+
+        #fileInput { display: none; }
+        .hidden { display: none !important; }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+        @media (max-width: 1100px) {
+            .app-container { grid-template-columns: 250px 1fr 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
+            </div>
+            Plate<span>Vision</span> <small style="font-size: 9px; opacity: 0.5; margin-left: 5px;">PRO v2.0</small>
+        </div>
+        <div class="sys-status">
+            <div class="status-pill">
+                <div class="dot" id="hdrDot"></div>
+                <span id="hdrStatusText">CONNECTING...</span>
+            </div>
+            <div class="status-pill" id="hdrFrame">FRAME 0000</div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="panel-header">
+                Detected Plates
+                <span id="cropBadge" style="background: var(--cyan); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 9px;">0</span>
+            </div>
+            <div class="crop-gallery" id="cropsScroll"></div>
+        </aside>
+
+        <main class="viewport">
+            <div class="video-stage">
+                <div class="video-container">
+                    <div class="scan-line" id="beam"></div>
+                    <div class="video-empty" id="vempty">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom:12px; opacity:0.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <p style="font-family:var(--mono); font-size:12px;">SYSTEM READY. LOAD VIDEO SOURCE.</p>
+                    </div>
+                    <video id="videoEl" playsinline muted></video>
+                    <canvas id="overlayCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="bottom-bar">
+                <div class="timeline-container">
+                    <div class="timeline-info" id="timeCur">00:00 / 00:00</div>
+                    <div class="timeline-track" id="timelineTrack">
+                        <div class="timeline-progress" id="timelineProgress"></div>
+                    </div>
+                    <div class="timeline-info" id="frameCur">F: 0000</div>
+                </div>
+                <div class="controls-row">
+                    <button class="btn btn-prim" onclick="document.getElementById('fileInput').click()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Load Video
+                    </button>
+                    <input type="file" id="fileInput" accept="video/*"/>
+                    <button class="btn" id="btnPlay" onclick="togglePlay()" disabled><span id="playLbl">Play</span></button>
+                    <button class="btn" onclick="detectNow()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        Detect Frame
+                    </button>
+                    <div style="flex:1"></div>
+                    <div style="display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:10px; color:var(--text-dim);">
+                        CONF <input type="range" min="10" max="95" value="25" id="confSlider" style="width:80px; accent-color:var(--cyan);" oninput="document.getElementById('confVal').textContent=this.value+'%'"/>
+                        <span id="confVal" style="color:var(--cyan); min-width:30px;">25%</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar sidebar-right">
+            <div class="ocr-display">
+                <div class="panel-header" style="padding:0 0 15px 0; border:none">Live OCR</div>
+                <span class="ocr-text" id="ocrText">–</span>
+                <div class="conf-meter"><div class="conf-fill" id="ocrFill"></div></div>
+                <div style="font-family:var(--mono); font-size:11px; margin-top:8px; color:var(--text-dim)">
+                    CONFIDENCE: <span id="ocrConf" style="color:var(--cyan)">0%</span>
+                </div>
+            </div>
+            <div class="panel-header">Session Analytics</div>
+            <div class="stats-grid">
+                <div class="stat-card"><span class="stat-val" id="sDetect">0</span><span class="stat-lbl">Detections</span></div>
+                <div class="stat-card"><span class="stat-val" id="sUnique">0</span><span class="stat-lbl">Unique</span></div>
+                <div class="stat-card"><span class="stat-val" id="sConf">–</span><span class="stat-lbl">Avg Conf</span></div>
+                <div class="stat-card"><span class="stat-val" id="sFrames">0</span><span class="stat-lbl">Frames</span></div>
+            </div>
+            <div class="panel-header">Engine Status</div>
+            <div class="model-list" id="modelRows">
+                <div class="model-item" id="pilV"><span>Vehicle Det.</span> <span>...</span></div>
+                <div class="model-item" id="pilLP"><span>Plate Det.</span> <span>...</span></div>
+                <div class="model-item" id="pilOCR"><span>OCR Engine</span> <span>...</span></div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const API = "http://localhost:5000";
+        const AUTO_DETECT_INTERVAL = 30;
+
+        const S = {
+            playing: false,
+            frame: 0,
+            detecting: false,
+            detections: 0,
+            uniquePlates: new Set(),
+            confHistory: [],
+            backendOk: false,
+        };
+
+        const video = document.getElementById("videoEl");
+        const canvas = document.getElementById("overlayCanvas");
+        const ctx = canvas.getContext("2d");
+
+        async function checkBackend() {
+            try {
+                const r = await fetch(`${API}/api/status`, { signal: AbortSignal.timeout(3000) });
+                const d = await r.json();
+                S.backendOk = true;
+                document.getElementById("hdrDot").className = "dot online";
+                document.getElementById("hdrStatusText").textContent = "BACKEND ONLINE";
+                updateModelPill("pilV", d.vehicle_model);
+                updateModelPill("pilLP", d.lp_model);
+                updateModelPill("pilOCR", d.ocr_model);
+            } catch {
+                S.backendOk = false;
+                document.getElementById("hdrDot").className = "dot";
+                document.getElementById("hdrStatusText").textContent = "BACKEND OFFLINE";
+            }
+        }
+
+        function updateModelPill(id, val) {
+            const el = document.getElementById(id);
+            el.classList.add('active');
+            el.querySelector('span:last-child').textContent = val ? "LOADED" : "ERROR";
+        }
+
+        document.getElementById("fileInput").addEventListener("change", e => {
+            const f = e.target.files[0];
+            if (f) loadVideo(f);
+        });
+
+        function loadVideo(file) {
+            const url = URL.createObjectURL(file);
+            video.src = url;
+            document.getElementById("vempty").classList.add("hidden");
+            video.addEventListener("loadedmetadata", () => {
+                // Set canvas internal resolution to match actual video pixels
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                document.getElementById("btnPlay").disabled = false;
+                updateTimeline();
+            }, { once: true });
+        }
+
+        function togglePlay() {
+            if (video.paused) {
+                video.play();
+                S.playing = true;
+                document.getElementById("playLbl").textContent = "Pause";
+                document.getElementById("beam").classList.add("active");
+                requestAnimationFrame(loop);
+            } else {
+                video.pause();
+                S.playing = false;
+                document.getElementById("playLbl").textContent = "Play";
+                document.getElementById("beam").classList.remove("active");
+            }
+        }
+
+        let lastAutoFrame = 0;
+        function loop() {
+            if (!S.playing) return;
+            S.frame++;
+            document.getElementById("hdrFrame").textContent = `FRAME ${String(S.frame).padStart(4,"0")}`;
+            document.getElementById("frameCur").textContent = `F: ${String(S.frame).padStart(4,"0")}`;
+            document.getElementById("sFrames").textContent = S.frame;
+            updateTimeline();
+            if (!S.detecting && S.backendOk && (S.frame - lastAutoFrame) >= AUTO_DETECT_INTERVAL) {
+                lastAutoFrame = S.frame;
+                sendFrame();
+            }
+            requestAnimationFrame(loop);
+        }
+
+        function updateTimeline() {
+            const cur = video.currentTime;
+            const dur = video.duration || 0;
+            const pct = (cur / dur) * 100;
+            document.getElementById("timelineProgress").style.width = `${pct}%`;
+            document.getElementById("timeCur").textContent = `${fmtTime(cur)} / ${fmtTime(dur)}`;
+        }
+
+        function fmtTime(s) {
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        }
+
+        async function detectNow() {
+            if (!video.src || S.detecting) return;
+            sendFrame();
+        }
+
+        async function sendFrame() {
+            if (S.detecting) return;
+            if (!S.backendOk) { alert("Backend offline"); return; }
+            S.detecting = true;
+            document.getElementById("beam").classList.add("active");
+            const tmp = document.createElement("canvas");
+            tmp.width = video.videoWidth;
+            tmp.height = video.videoHeight;
+            tmp.getContext("2d").drawImage(video, 0, 0);
+            const b64 = tmp.toDataURL("image/jpeg", 0.85);
+            const conf = parseInt(document.getElementById("confSlider").value) / 100;
+            try {
+                const res = await fetch(`${API}/api/detect`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ frame: b64, conf }),
+                });
+                const data = await res.json();
+                handleResult(data);
+            } catch (e) { console.error(e); } 
+            finally { S.detecting = false; }
+        }
+
+        function handleResult(data) {
+            if (data.annotated) {
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.src = data.annotated;
+            }
+            let bestPlate = null;
+            data.detections.forEach(det => {
+                if (!det.plate) return;
+                const p = det.plate;
+                S.detections++;
+                if (p.ocr_text && p.ocr_text !== "?") S.uniquePlates.add(p.ocr_text);
+                S.confHistory.push(p.ocr_conf || 0);
+                addCropCard(p);
+                if (!bestPlate || p.ocr_conf > bestPlate.ocr_conf) bestPlate = p;
+            });
+            if (bestPlate) updateOCRDisplay(bestPlate);
+            document.getElementById("sDetect").textContent = S.detections;
+            document.getElementById("sUnique").textContent = S.uniquePlates.size;
+            if (S.confHistory.length) {
+                const avg = Math.round(S.confHistory.reduce((a,b)=>a+b,0)/S.confHistory.length);
+                document.getElementById("sConf").textContent = avg + "%";
+            }
+        }
+
+        function updateOCRDisplay(plate) {
+            const text = plate.ocr_text || "–";
+            const conf = plate.ocr_conf || 0;
+            document.getElementById("ocrText").textContent = text;
+            document.getElementById("ocrFill").style.width = `${conf}%`;
+            document.getElementById("ocrConf").textContent = `${conf.toFixed(1)}%`;
+        }
+
+        function addCropCard(plate) {
+            const gallery = document.getElementById("cropsScroll");
+            const card = document.createElement("div");
+            card.className = "crop-card";
+            card.innerHTML = `
+                <img src="${plate.crop_b64 || ''}">
+                <div class="crop-info">
+                    <span class="crop-text">${plate.ocr_text || '?'}</span>
+                    <span class="crop-conf">${Math.round(plate.ocr_conf || 0)}%</span>
+                </div>
+            `;
+            card.onclick = () => {
+                document.querySelectorAll('.crop-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                updateOCRDisplay(plate);
+            };
+            
+            // Add newest to top
+            gallery.prepend(card);
+            
+            // REMOVE oldest if more than 10 plates
+            while (gallery.children.length > 10) {
+                gallery.lastChild.remove();
+            }
+            
+            document.getElementById("cropBadge").textContent = gallery.children.length;
+        }
+
+        checkBackend();
+        setInterval(checkBackend, 10000);
+    </script>
+</body>
+</html>

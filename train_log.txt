@@ -1,0 +1,2890 @@
+🔒 Deterministic mode ENABLED (Reproducibility optimized). Benchmark mode DISABLED.
+============================================================
+CONFIGURATION
+  MODEL_TYPE                     : restran
+  EXPERIMENT_NAME                : pretrain_stage1
+  AUGMENTATION_LEVEL             : full
+  BACKBONE                       : svtrv2
+  PRETRAINED_BACKBONE            : False
+  USE_STN                        : True
+  OPENOCR_ROOT                   : third_party/OpenOCR
+  SVTRV2_REPO_URL                : https://github.com/Topdu/OpenOCR.git
+  SVTRV2_WEIGHTS_URL             : https://github.com/Topdu/OpenOCR/releases/download/develop0.0.1/openocr_svtrv2_ch.pth
+  DECODE_MODE                    : reranked_beam
+  BEAM_WIDTH                     : 5
+  LAYOUT_AWARE_DECODING          : True
+  NUM_SLOTS                      : 8
+  CONSISTENCY_LOSS_WEIGHT        : 0.02
+  EMA_DECAY                      : 0.999
+  DISTILL_WEIGHT                 : 0.05
+  DISTILL_TEMPERATURE            : 2.0
+  SLOT_DIM                       : 512
+  USE_EMA_TEACHER                : True
+  DATA_ROOT                      : data/train
+  TEST_DATA_ROOT                 : data/public_test
+  BLIND_DATA_ROOT                : data/blind_test
+  VAL_SPLIT_FILE                 : data/val_tracks.json
+  SUBMISSION_FILE                : submission.txt
+  IMG_HEIGHT                     : 32
+  IMG_WIDTH                      : 128
+  CHARS                          : 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  BATCH_SIZE                     : 64
+  LEARNING_RATE                  : 8e-05
+  EPOCHS                         : 45
+  SEED                           : 42
+  NUM_WORKERS                    : 4
+  WEIGHT_DECAY                   : 0.0001
+  GRAD_CLIP                      : 1.0
+  SPLIT_RATIO                    : 0.9
+  USE_CUDNN_BENCHMARK            : False
+  USE_ONECYCLE_LR                : True
+  DIV_FACTOR                     : 8.0
+  FINAL_DIV_FACTOR               : 20.0
+  PCT_START                      : 0.2
+  USE_SLOT_EMBEDDING             : True
+  SLOT_EMBED_DIM                 : 128
+  USE_CONTRASTIVE_LOSS           : False
+  CONTRASTIVE_WEIGHT             : 0.05
+  USE_CENTER_LOSS                : False
+  CENTER_LOSS_WEIGHT             : 0.01
+  USE_HARD_CONFUSION_MINING      : True
+  HIDDEN_SIZE                    : 256
+  RNN_DROPOUT                    : 0.3
+  TRANSFORMER_HEADS              : 8
+  TRANSFORMER_LAYERS             : 5
+  TRANSFORMER_FF_DIM             : 2048
+  TRANSFORMER_DROPOUT            : 0.1
+  DEVICE                         : cuda
+  OUTPUT_DIR                     : pretrain_results
+  CHAR2IDX                       : {'0': 1, '1': 2, '2': 3, '3': 4, '4': 5, '5': 6, '6': 7, '7': 8, '8': 9, '9': 10, 'A': 11, 'B': 12, 'C': 13, 'D': 14, 'E': 15, 'F': 16, 'G': 17, 'H': 18, 'I': 19, 'J': 20, 'K': 21, 'L': 22, 'M': 23, 'N': 24, 'O': 25, 'P': 26, 'Q': 27, 'R': 28, 'S': 29, 'T': 30, 'U': 31, 'V': 32, 'W': 33, 'X': 34, 'Y': 35, 'Z': 36}
+  IDX2CHAR                       : {1: '0', 2: '1', 3: '2', 4: '3', 5: '4', 6: '5', 7: '6', 8: '7', 9: '8', 10: '9', 11: 'A', 12: 'B', 13: 'C', 14: 'D', 15: 'E', 16: 'F', 17: 'G', 18: 'H', 19: 'I', 20: 'J', 21: 'K', 22: 'L', 23: 'M', 24: 'N', 25: 'O', 26: 'P', 27: 'Q', 28: 'R', 29: 'S', 30: 'T', 31: 'U', 32: 'V', 33: 'W', 34: 'X', 35: 'Y', 36: 'Z'}
+  NUM_CLASSES                    : 37
+============================================================
+
+🔥 SVTRv2 BACKBONE SELECTED
+📉 SVTRv2 default LR set to 8e-05 (ResNet34 uses 1e-4)
+📂 OpenOCR root: third_party/OpenOCR
+🔗 Weights URL: https://github.com/Topdu/OpenOCR/releases/download/develop0.0.1/openocr_svtrv2_ch.pth
+
+🏋️ Pretrained backbone: True
+🧊 Freeze backbone: False
+
+[TRAIN] Scanning: data/train
+📂 Loading split from 'data/val_tracks.json'...
+✅ Fixed validation set loaded: 999 tracks (from data/val_tracks.json)
+[TRAIN] Loaded 54912 tracks.
+Indexing train: 100%|█████████████████████| 54912/54912 [12:28<00:00, 73.33it/s]
+-> TOTAL: 90595 samples.
+[VAL] Scanning: data/train
+📂 Loading split from 'data/val_tracks.json'...
+✅ Fixed validation set loaded: 999 tracks (from data/val_tracks.json)
+[VAL] Loaded 999 tracks.
+Indexing val: 100%|███████████████████████████| 999/999 [00:10<00:00, 91.61it/s]
+-> TOTAL: 999 samples.
+
+📊 Train samples: 90595 | Val samples: 999
+
+⚙️  Selective Correction DISABLED (baseline training)
+
+🧠 Using backbone: svtrv2
+
+✅ Model ready: restran
+   Backbone: svtrv2
+🔥 INITIALIZING PRETRAIN TRAINER (DEEPCOPY VERSION)
+🔥 Creating teacher via deepcopy...
+🔥 Teacher deepcopy complete.
+📌 EMA Decay: 0.999 | Distill Weight: 0.05 | Consistency Weight: 0.02 | Risk Weight: 0.02 | Refine Weight: 0.5 | Temp: 2.0
+
+🚀 Starting pretraining...
+
+🚀 PRETRAIN START | Device: cuda | Epochs: 45
+⚙️  Selective Correction DISABLED (baseline training)
+Ep 1/45: 100%|█| 1416/1416 [16:20<00:00,  1.44it/s, loss=2.69, slot=2.69, risk=0
+  📊 Epoch avg: Loss=2.7807 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 1)
+    🔍 [STUDENT Ep 1] Track: track_10007 | GT: AYG7579 | Fused: AAB6764 (conf=0.13) | MVCP: ARF1G81
+    🔍 [STUDENT Ep 1] Track: track_10011 | GT: ODE3320 | Fused: ABH6766 (conf=0.12) | MVCP: ADH4G18
+    🔍 [STUDENT Ep 1] Track: track_10018 | GT: DRC6817 | Fused: ABA7767 (conf=0.12) | MVCP: ARP4F11
+    🔍 [STUDENT Ep 1] Track: track_10029 | GT: BAE8708 | Fused: AAY6868 (conf=0.12) | MVCP: ARF1F41
+    🔍 [STUDENT Ep 1] Track: track_10047 | GT: LRA1832 | Fused: BET9A64 (conf=0.11) | MVCP: ARF1F11
+    🔍 [STUDENT Ep 1] Track: track_10052 | GT: AVE1881 | Fused: BBY7517 (conf=0.11) | MVCP: ARF1G44
+    🔍 [STUDENT Ep 1] Track: track_10068 | GT: AZL5022 | Fused: BAX0B89 (conf=0.11) | MVCP: ARF8G44
+    🔍 [STUDENT Ep 1] Track: track_10070 | GT: FQV8047 | Fused: AAX8B18 (conf=0.10) | MVCP: ARF1G11
+    🔍 [STUDENT Ep 1] Track: track_10090 | GT: AXR3781 | Fused: ABA8897 (conf=0.12) | MVCP: BRK8F84
+    🔍 [STUDENT Ep 1] Track: track_10100 | GT: AKP0704 | Fused: AAZ6747 (conf=0.12) | MVCP: APF1F88
+
+📊 Validation Results (Epoch 1):
+   Baseline (fused) accuracy : 0.00%
+   MVCP (per‑frame vote)     : 0.00%
+
+📊 Top Character Confusions (epoch):
+  A -> B: 120
+  1 -> 6: 103
+  2 -> 6: 102
+  4 -> 6: 101
+  B -> A: 98
+  1 -> 8: 96
+  8 -> 6: 90
+  5 -> 6: 90
+  3 -> 6: 88
+  0 -> 6: 87
+  T -> B: 86
+  9 -> 6: 82
+  7 -> 6: 81
+  2 -> 8: 79
+  S -> B: 79
+  R -> B: 78
+  4 -> 8: 76
+  B -> E: 76
+  0 -> 8: 75
+  5 -> 8: 72
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 0: A -> B: 91
+  pos 0: T -> B: 82
+  pos 0: B -> A: 81
+  pos 0: S -> B: 75
+  pos 0: R -> B: 72
+  pos 1: B -> E: 67
+  pos 5: 1 -> 6: 52
+  pos 5: 2 -> 6: 51
+  pos 1: A -> E: 51
+  pos 1: D -> E: 50
+  pos 5: 4 -> 6: 47
+  pos 3: 1 -> 8: 47
+  pos 1: H -> E: 47
+  pos 5: 8 -> 6: 44
+  pos 3: 6 -> 8: 43
+  pos 3: 5 -> 8: 41
+  pos 3: 4 -> 8: 41
+  pos 5: 5 -> 6: 40
+  pos 3: 7 -> 8: 40
+  pos 3: 3 -> 8: 39
+
+Epoch 1/45: Train Loss: 2.7807 | Val Loss: 2.6088 | Baseline Acc: 0.00% | MVCP Acc: 0.00% | LR: 1.21e-05
+Ep 2/45: 100%|█| 1416/1416 [10:18<00:00,  2.29it/s, loss=2.59, slot=2.58, risk=0
+  📊 Epoch avg: Loss=2.6719 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 2)
+
+📊 Validation Results (Epoch 2):
+   Baseline (fused) accuracy : 0.00%
+   MVCP (per‑frame vote)     : 0.00%
+
+📊 Top Character Confusions (epoch):
+  1 -> 2: 260
+  4 -> 2: 230
+  3 -> 2: 224
+  0 -> 2: 224
+  8 -> 2: 214
+  7 -> 2: 209
+  9 -> 2: 206
+  6 -> 2: 204
+  5 -> 2: 203
+  B -> A: 152
+  B -> E: 76
+  A -> E: 56
+  D -> E: 53
+  R -> A: 52
+  G -> I: 51
+  A -> B: 48
+  E -> I: 48
+  6 -> 4: 47
+  0 -> 4: 46
+  J -> I: 46
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 0: B -> A: 140
+  pos 6: 1 -> 2: 90
+  pos 3: 1 -> 2: 88
+  pos 3: 4 -> 2: 81
+  pos 5: 0 -> 2: 79
+  pos 3: 7 -> 2: 77
+  pos 5: 3 -> 2: 76
+  pos 5: 4 -> 2: 73
+  pos 3: 8 -> 2: 72
+  pos 3: 9 -> 2: 72
+  pos 6: 0 -> 2: 71
+  pos 3: 5 -> 2: 71
+  pos 6: 8 -> 2: 70
+  pos 3: 3 -> 2: 68
+  pos 6: 7 -> 2: 67
+  pos 6: 4 -> 2: 67
+  pos 6: 3 -> 2: 67
+  pos 1: B -> E: 67
+  pos 5: 1 -> 2: 66
+  pos 5: 6 -> 2: 66
+
+Epoch 2/45: Train Loss: 2.6719 | Val Loss: 2.5662 | Baseline Acc: 0.00% | MVCP Acc: 0.00% | LR: 1.82e-05
+Ep 3/45: 100%|█| 1416/1416 [08:53<00:00,  2.65it/s, loss=2.53, slot=2.51, risk=0
+  📊 Epoch avg: Loss=2.6131 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 3)
+    🔍 [STUDENT Ep 3] Track: track_10007 | GT: AYG7579 | Fused: AYY7777 (conf=0.19) | MVCP: AYX7777
+    🔍 [STUDENT Ep 3] Track: track_10011 | GT: ODE3320 | Fused: BBG0000 (conf=0.14) | MVCP: ADX8337
+    🔍 [STUDENT Ep 3] Track: track_10018 | GT: DRC6817 | Fused: AYV9808 (conf=0.13) | MVCP: AAN8887
+    🔍 [STUDENT Ep 3] Track: track_10029 | GT: BAE8708 | Fused: ABM9968 (conf=0.14) | MVCP: AAA0898
+    🔍 [STUDENT Ep 3] Track: track_10047 | GT: LRA1832 | Fused: AXY4747 (conf=0.16) | MVCP: AAY7A77
+    🔍 [STUDENT Ep 3] Track: track_10052 | GT: AVE1881 | Fused: BBF6G65 (conf=0.13) | MVCP: BDE8G98
+    🔍 [STUDENT Ep 3] Track: track_10068 | GT: AZL5022 | Fused: BCG0000 (conf=0.15) | MVCP: ADH3832
+    🔍 [STUDENT Ep 3] Track: track_10070 | GT: FQV8047 | Fused: ABB9998 (conf=0.13) | MVCP: AAX8B99
+    🔍 [STUDENT Ep 3] Track: track_10090 | GT: AXR3781 | Fused: AYI1111 (conf=0.18) | MVCP: AAY7779
+    🔍 [STUDENT Ep 3] Track: track_10100 | GT: AKP0704 | Fused: ABA8968 (conf=0.13) | MVCP: AAY3864
+
+📊 Validation Results (Epoch 3):
+   Baseline (fused) accuracy : 0.00%
+   MVCP (per‑frame vote)     : 0.00%
+
+📊 Top Character Confusions (epoch):
+  2 -> 7: 149
+  1 -> 7: 146
+  B -> A: 136
+  3 -> 7: 102
+  5 -> 7: 90
+  9 -> 7: 89
+  0 -> 7: 80
+  8 -> 7: 71
+  6 -> 4: 69
+  R -> A: 68
+  A -> B: 61
+  6 -> 7: 61
+  8 -> 9: 58
+  4 -> 7: 57
+  6 -> 9: 56
+  5 -> 9: 54
+  0 -> 9: 53
+  8 -> 4: 50
+  3 -> 9: 50
+  4 -> 9: 49
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 0: B -> A: 110
+  pos 0: R -> A: 59
+  pos 6: 1 -> 7: 53
+  pos 3: 2 -> 7: 49
+  pos 6: 2 -> 7: 48
+  pos 0: A -> B: 45
+  pos 5: 2 -> 7: 44
+  pos 0: S -> B: 44
+  pos 5: 1 -> 7: 43
+  pos 3: 1 -> 7: 40
+  pos 0: T -> B: 40
+  pos 0: T -> A: 39
+  pos 6: 9 -> 7: 38
+  pos 6: 3 -> 7: 33
+  pos 5: 3 -> 7: 33
+  pos 1: B -> E: 33
+  pos 1: B -> Y: 32
+  pos 0: R -> B: 30
+  pos 5: 0 -> 7: 29
+  pos 0: Q -> A: 28
+
+Epoch 3/45: Train Loss: 2.6131 | Val Loss: 2.4724 | Baseline Acc: 0.00% | MVCP Acc: 0.00% | LR: 2.75e-05
+Ep 4/45: 100%|█| 1416/1416 [08:50<00:00,  2.67it/s, loss=1.49, slot=1.3, risk=0,
+  📊 Epoch avg: Loss=2.2071 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 4)
+
+📊 Validation Results (Epoch 4):
+   Baseline (fused) accuracy : 12.91%
+   MVCP (per‑frame vote)     : 0.40%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 83
+  5 -> 0: 65
+  8 -> 6: 57
+  1 -> 5: 53
+  6 -> 0: 49
+  3 -> 1: 47
+  M -> H: 41
+  8 -> 0: 39
+  3 -> 5: 35
+  7 -> 9: 34
+  B -> R: 34
+  N -> H: 34
+  3 -> 0: 33
+  2 -> 3: 28
+  D -> B: 28
+  2 -> 0: 26
+  4 -> 6: 26
+  E -> C: 26
+  B -> A: 25
+  9 -> 0: 25
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 5: 6 -> 4: 32
+  pos 3: 6 -> 4: 29
+  pos 0: B -> R: 26
+  pos 3: 5 -> 0: 25
+  pos 5: 5 -> 0: 24
+  pos 6: 8 -> 6: 24
+  pos 6: 1 -> 5: 22
+  pos 5: 6 -> 0: 21
+  pos 2: M -> H: 21
+  pos 3: 3 -> 0: 20
+  pos 1: M -> H: 20
+  pos 6: 6 -> 4: 20
+  pos 3: 8 -> 6: 18
+  pos 3: 1 -> 5: 18
+  pos 1: N -> H: 18
+  pos 6: 7 -> 9: 16
+  pos 0: B -> A: 16
+  pos 2: N -> H: 16
+  pos 4: E -> C: 16
+  pos 3: 8 -> 0: 15
+
+Epoch 4/45: Train Loss: 2.2071 | Val Loss: 1.1087 | Baseline Acc: 12.91% | MVCP Acc: 0.40% | LR: 3.89e-05
+  ✨ Accuracy Improved: 0.00% -> 12.91%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (12.91%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 5/45: 100%|█| 1416/1416 [08:02<00:00,  2.93it/s, loss=1.21, slot=1.02, risk=0
+  📊 Epoch avg: Loss=1.4157 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 5)
+    🔍 [STUDENT Ep 5] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.63) | MVCP: AYG7579
+    🔍 [STUDENT Ep 5] Track: track_10011 | GT: ODE3320 | Fused: BBK3120 (conf=0.44) | MVCP: BBK3320
+    🔍 [STUDENT Ep 5] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.47) | MVCP: BRC6817
+    🔍 [STUDENT Ep 5] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.44) | MVCP: BAE8208
+    🔍 [STUDENT Ep 5] Track: track_10047 | GT: LRA1832 | Fused: ERA1832 (conf=0.49) | MVCP: ABA1337
+    🔍 [STUDENT Ep 5] Track: track_10052 | GT: AVE1881 | Fused: AYE9802 (conf=0.29) | MVCP: ARE9000
+    🔍 [STUDENT Ep 5] Track: track_10068 | GT: AZL5022 | Fused: BPL0000 (conf=0.22) | MVCP: BCM0005
+    🔍 [STUDENT Ep 5] Track: track_10070 | GT: FQV8047 | Fused: PDY8047 (conf=0.44) | MVCP: PFH8007
+    🔍 [STUDENT Ep 5] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.54) | MVCP: AXB3781
+    🔍 [STUDENT Ep 5] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.64) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 5):
+   Baseline (fused) accuracy : 36.74%
+   MVCP (per‑frame vote)     : 22.52%
+
+📊 Top Character Confusions (epoch):
+  B -> R: 52
+  H -> M: 43
+  1 -> 3: 34
+  6 -> 8: 33
+  V -> Y: 29
+  8 -> 6: 24
+  6 -> 4: 23
+  N -> M: 20
+  5 -> 9: 19
+  O -> D: 18
+  N -> H: 18
+  A -> B: 17
+  2 -> 3: 17
+  B -> A: 17
+  D -> B: 16
+  8 -> 9: 16
+  0 -> 8: 14
+  3 -> 2: 14
+  O -> Q: 13
+  B -> D: 13
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 0: B -> R: 32
+  pos 2: H -> M: 22
+  pos 1: H -> M: 17
+  pos 2: N -> M: 16
+  pos 1: V -> Y: 15
+  pos 6: 6 -> 8: 15
+  pos 2: V -> Y: 14
+  pos 3: 1 -> 3: 14
+  pos 2: B -> R: 12
+  pos 3: 8 -> 6: 11
+  pos 1: N -> H: 11
+  pos 0: A -> B: 10
+  pos 2: O -> D: 10
+  pos 6: 6 -> 4: 10
+  pos 6: 1 -> 3: 10
+  pos 5: 1 -> 3: 10
+  pos 4: B -> D: 9
+  pos 5: 8 -> 6: 8
+  pos 1: B -> R: 8
+  pos 1: O -> D: 8
+
+Epoch 5/45: Train Loss: 1.4157 | Val Loss: 0.7166 | Baseline Acc: 36.74% | MVCP Acc: 22.52% | LR: 5.11e-05
+  ✨ Accuracy Improved: 12.91% -> 36.74%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (36.74%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 6/45: 100%|█| 1416/1416 [08:20<00:00,  2.83it/s, loss=1.35, slot=1.12, risk=0
+  📊 Epoch avg: Loss=1.3929 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 6)
+
+📊 Validation Results (Epoch 6):
+   Baseline (fused) accuracy : 51.05%
+   MVCP (per‑frame vote)     : 38.14%
+
+📊 Top Character Confusions (epoch):
+  8 -> 6: 49
+  1 -> 3: 22
+  5 -> 6: 19
+  D -> B: 17
+  8 -> 0: 17
+  M -> H: 17
+  A -> B: 16
+  2 -> 3: 15
+  V -> Y: 14
+  4 -> 6: 14
+  8 -> 9: 14
+  2 -> 0: 13
+  6 -> 0: 13
+  R -> B: 12
+  O -> Q: 12
+  5 -> 0: 11
+  6 -> 4: 11
+  6 -> 8: 11
+  H -> M: 11
+  N -> H: 11
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 5: 8 -> 6: 18
+  pos 6: 8 -> 6: 16
+  pos 3: 1 -> 3: 12
+  pos 0: A -> B: 12
+  pos 2: M -> H: 12
+  pos 3: 8 -> 6: 12
+  pos 2: D -> O: 9
+  pos 6: 2 -> 3: 8
+  pos 1: V -> Y: 7
+  pos 2: V -> Y: 7
+  pos 3: 6 -> 8: 7
+  pos 2: N -> H: 7
+  pos 0: R -> B: 7
+  pos 4: C -> G: 7
+  pos 6: 1 -> 3: 7
+  pos 2: W -> V: 6
+  pos 0: Q -> B: 6
+  pos 2: X -> I: 6
+  pos 3: 6 -> 0: 6
+  pos 6: 5 -> 6: 6
+
+Epoch 6/45: Train Loss: 1.3929 | Val Loss: 0.6703 | Baseline Acc: 51.05% | MVCP Acc: 38.14% | LR: 6.25e-05
+  ✨ Accuracy Improved: 36.74% -> 51.05%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (51.05%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 7/45: 100%|█| 1416/1416 [08:07<00:00,  2.90it/s, loss=1.2, slot=0.977, risk=0
+  📊 Epoch avg: Loss=1.1958 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 7)
+    🔍 [STUDENT Ep 7] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.54) | MVCP: AYG7579
+    🔍 [STUDENT Ep 7] Track: track_10011 | GT: ODE3320 | Fused: DQK3320 (conf=0.43) | MVCP: OQK3320
+    🔍 [STUDENT Ep 7] Track: track_10018 | GT: DRC6817 | Fused: ORC6817 (conf=0.41) | MVCP: OBC6817
+    🔍 [STUDENT Ep 7] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.46) | MVCP: BAE8208
+    🔍 [STUDENT Ep 7] Track: track_10047 | GT: LRA1832 | Fused: ERA1832 (conf=0.45) | MVCP: EXA1832
+    🔍 [STUDENT Ep 7] Track: track_10052 | GT: AVE1881 | Fused: AVE3440 (conf=0.37) | MVCP: AVE9440
+    🔍 [STUDENT Ep 7] Track: track_10068 | GT: AZL5022 | Fused: AZL5020 (conf=0.39) | MVCP: ACL5020
+    🔍 [STUDENT Ep 7] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.48) | MVCP: FQV8047
+    🔍 [STUDENT Ep 7] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.55) | MVCP: AXR3781
+    🔍 [STUDENT Ep 7] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.57) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 7):
+   Baseline (fused) accuracy : 52.95%
+   MVCP (per‑frame vote)     : 45.15%
+
+📊 Top Character Confusions (epoch):
+  8 -> 6: 60
+  6 -> 4: 47
+  B -> A: 31
+  1 -> 3: 26
+  M -> H: 17
+  D -> B: 16
+  1 -> 5: 14
+  5 -> 6: 13
+  H -> N: 12
+  V -> Y: 11
+  B -> S: 10
+  6 -> 8: 10
+  2 -> 3: 9
+  8 -> 9: 9
+  8 -> 0: 9
+  9 -> 5: 8
+  R -> B: 8
+  7 -> 9: 8
+  N -> H: 8
+  R -> A: 8
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 5: 8 -> 6: 26
+  pos 6: 6 -> 4: 22
+  pos 3: 8 -> 6: 17
+  pos 0: B -> A: 16
+  pos 5: 6 -> 4: 15
+  pos 6: 8 -> 6: 15
+  pos 3: 1 -> 3: 13
+  pos 2: M -> H: 11
+  pos 1: B -> A: 10
+  pos 6: 1 -> 3: 10
+  pos 0: R -> A: 8
+  pos 1: V -> Y: 7
+  pos 6: 8 -> 0: 7
+  pos 3: 6 -> 4: 7
+  pos 4: D -> B: 7
+  pos 6: 1 -> 5: 6
+  pos 1: M -> H: 6
+  pos 3: 1 -> 5: 6
+  pos 1: H -> N: 6
+  pos 3: 9 -> 5: 5
+
+Epoch 7/45: Train Loss: 1.1958 | Val Loss: 0.5539 | Baseline Acc: 52.95% | MVCP Acc: 45.15% | LR: 7.18e-05
+  ✨ Accuracy Improved: 51.05% -> 52.95%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (52.95%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 8/45: 100%|█| 1416/1416 [08:05<00:00,  2.92it/s, loss=1.04, slot=0.839, risk=
+  📊 Epoch avg: Loss=1.1203 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 8)
+
+📊 Validation Results (Epoch 8):
+   Baseline (fused) accuracy : 61.06%
+   MVCP (per‑frame vote)     : 52.85%
+
+📊 Top Character Confusions (epoch):
+  1 -> 3: 28
+  M -> H: 25
+  6 -> 8: 18
+  6 -> 4: 16
+  2 -> 3: 15
+  H -> N: 14
+  B -> D: 12
+  A -> B: 11
+  5 -> 3: 10
+  8 -> 6: 10
+  8 -> 9: 10
+  9 -> 8: 9
+  Q -> D: 9
+  0 -> 8: 8
+  0 -> 2: 8
+  R -> B: 8
+  7 -> 2: 8
+  C -> G: 8
+  0 -> 9: 7
+  5 -> 8: 7
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 3: 1 -> 3: 20
+  pos 2: M -> H: 16
+  pos 1: H -> N: 10
+  pos 3: 6 -> 8: 8
+  pos 5: 2 -> 3: 8
+  pos 1: M -> H: 8
+  pos 0: A -> B: 7
+  pos 3: 6 -> 4: 7
+  pos 1: B -> D: 7
+  pos 3: 8 -> 6: 7
+  pos 3: 9 -> 8: 6
+  pos 5: 1 -> 3: 6
+  pos 5: 6 -> 4: 5
+  pos 6: 8 -> 9: 5
+  pos 6: 6 -> 8: 5
+  pos 2: Q -> D: 5
+  pos 4: C -> G: 5
+  pos 4: B -> D: 5
+  pos 3: 2 -> 3: 5
+  pos 1: C -> E: 4
+
+Epoch 8/45: Train Loss: 1.1203 | Val Loss: 0.4662 | Baseline Acc: 61.06% | MVCP Acc: 52.85% | LR: 7.79e-05
+  ✨ Accuracy Improved: 52.95% -> 61.06%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (61.06%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 9/45: 100%|█| 1416/1416 [08:06<00:00,  2.91it/s, loss=1.07, slot=0.808, risk=
+  📊 Epoch avg: Loss=1.0985 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 9)
+    🔍 [STUDENT Ep 9] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.57) | MVCP: AYG7579
+    🔍 [STUDENT Ep 9] Track: track_10011 | GT: ODE3320 | Fused: DDK3328 (conf=0.42) | MVCP: DDK3320
+    🔍 [STUDENT Ep 9] Track: track_10018 | GT: DRC6817 | Fused: QRC6817 (conf=0.50) | MVCP: DRC6817
+    🔍 [STUDENT Ep 9] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.55) | MVCP: BAE8708
+    🔍 [STUDENT Ep 9] Track: track_10047 | GT: LRA1832 | Fused: ERA1832 (conf=0.53) | MVCP: ERA1832
+    🔍 [STUDENT Ep 9] Track: track_10052 | GT: AVE1881 | Fused: AVE7883 (conf=0.28) | MVCP: AYE9887
+    🔍 [STUDENT Ep 9] Track: track_10068 | GT: AZL5022 | Fused: AZL5023 (conf=0.38) | MVCP: AZL6029
+    🔍 [STUDENT Ep 9] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.49) | MVCP: FQV8047
+    🔍 [STUDENT Ep 9] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.57) | MVCP: AXR3781
+    🔍 [STUDENT Ep 9] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.58) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 9):
+   Baseline (fused) accuracy : 64.96%
+   MVCP (per‑frame vote)     : 55.96%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 37
+  1 -> 3: 17
+  M -> H: 16
+  0 -> 8: 13
+  6 -> 4: 13
+  O -> Q: 11
+  D -> B: 11
+  A -> B: 10
+  8 -> 9: 10
+  N -> H: 10
+  W -> V: 10
+  O -> D: 8
+  2 -> 3: 8
+  V -> Y: 8
+  1 -> 7: 7
+  5 -> 9: 7
+  B -> A: 7
+  5 -> 8: 6
+  5 -> 7: 6
+  4 -> 6: 6
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 8: 14
+  pos 2: M -> H: 11
+  pos 3: 6 -> 8: 11
+  pos 6: 1 -> 3: 9
+  pos 6: 0 -> 8: 8
+  pos 4: 6 -> 8: 8
+  pos 3: 1 -> 3: 6
+  pos 2: V -> Y: 5
+  pos 6: 6 -> 4: 5
+  pos 1: O -> Q: 5
+  pos 3: 8 -> 9: 5
+  pos 1: N -> H: 5
+  pos 2: N -> H: 5
+  pos 2: W -> V: 5
+  pos 1: W -> V: 5
+  pos 2: O -> D: 4
+  pos 1: A -> B: 4
+  pos 5: 6 -> 4: 4
+  pos 6: 8 -> 9: 4
+  pos 5: 6 -> 8: 4
+
+Epoch 9/45: Train Loss: 1.0985 | Val Loss: 0.4367 | Baseline Acc: 64.96% | MVCP Acc: 55.96% | LR: 8.00e-05
+  ✨ Accuracy Improved: 61.06% -> 64.96%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (64.96%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 10/45: 100%|█| 1416/1416 [08:04<00:00,  2.92it/s, loss=1.13, slot=0.88, risk=
+  📊 Epoch avg: Loss=1.0844 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 10)
+    🔍 [STUDENT Ep 10] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.56) | MVCP: AYG7579
+    🔍 [STUDENT Ep 10] Track: track_10011 | GT: ODE3320 | Fused: DDK3320 (conf=0.45) | MVCP: OOK3320
+    🔍 [STUDENT Ep 10] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.48) | MVCP: ORC6817
+    🔍 [STUDENT Ep 10] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.54) | MVCP: BAE8708
+    🔍 [STUDENT Ep 10] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.51) | MVCP: LBA1832
+    🔍 [STUDENT Ep 10] Track: track_10052 | GT: AVE1881 | Fused: AVE3882 (conf=0.30) | MVCP: AVE9882
+    🔍 [STUDENT Ep 10] Track: track_10068 | GT: AZL5022 | Fused: AZL9027 (conf=0.36) | MVCP: AZL5028
+    🔍 [STUDENT Ep 10] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.50) | MVCP: FQV8047
+    🔍 [STUDENT Ep 10] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.57) | MVCP: AXR3781
+    🔍 [STUDENT Ep 10] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.58) | MVCP: AKP0704
+    🔍 [STUDENT Ep 10] Track: track_10114 | GT: AXK1580 | Fused: AVB1986 (conf=0.34) | MVCP: AVB1988
+    🔍 [STUDENT Ep 10] Track: track_10115 | GT: AQS1094 | Fused: AQS1094 (conf=0.51) | MVCP: AQS1084
+    🔍 [STUDENT Ep 10] Track: track_10117 | GT: AVX5540 | Fused: AVX5540 (conf=0.55) | MVCP: AVX5540
+    🔍 [STUDENT Ep 10] Track: track_10123 | GT: HPW9584 | Fused: NPW9584 (conf=0.48) | MVCP: MPW9584
+    🔍 [STUDENT Ep 10] Track: track_10128 | GT: JKR4017 | Fused: JKW2017 (conf=0.43) | MVCP: JKW3077
+    🔍 [STUDENT Ep 10] Track: track_10134 | GT: BBJ1227 | Fused: BBJ1329 (conf=0.35) | MVCP: BBJ1889
+    🔍 [STUDENT Ep 10] Track: track_10148 | GT: ANT0268 | Fused: AMT0268 (conf=0.47) | MVCP: AWT0268
+    🔍 [STUDENT Ep 10] Track: track_10153 | GT: KGL5248 | Fused: ASL5248 (conf=0.52) | MVCP: ASL5248
+    🔍 [STUDENT Ep 10] Track: track_10154 | GT: PCY4077 | Fused: PCY4073 (conf=0.48) | MVCP: PCY4073
+    🔍 [STUDENT Ep 10] Track: track_10162 | GT: AVW1229 | Fused: AVM4229 (conf=0.50) | MVCP: AVM4229
+
+📊 Validation Results (Epoch 10):
+   Baseline (fused) accuracy : 68.07%
+   MVCP (per‑frame vote)     : 59.76%
+
+📊 Top Character Confusions (epoch):
+  8 -> 6: 19
+  M -> H: 17
+  6 -> 8: 16
+  0 -> 8: 13
+  D -> B: 13
+  5 -> 9: 11
+  B -> A: 10
+  6 -> 4: 10
+  W -> V: 9
+  4 -> 6: 9
+  A -> B: 8
+  6 -> 5: 8
+  H -> M: 8
+  Q -> O: 8
+  N -> M: 7
+  C -> E: 7
+  5 -> 8: 7
+  0 -> 2: 7
+  3 -> 2: 7
+  1 -> 3: 6
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 12
+  pos 3: 8 -> 6: 11
+  pos 4: 6 -> 8: 9
+  pos 6: 0 -> 8: 7
+  pos 0: B -> A: 6
+  pos 5: 8 -> 6: 6
+  pos 0: E -> A: 5
+  pos 6: 6 -> 4: 5
+  pos 1: M -> H: 5
+  pos 1: Q -> O: 5
+  pos 1: W -> V: 5
+  pos 3: 1 -> 3: 4
+  pos 4: 5 -> 9: 4
+  pos 1: C -> E: 4
+  pos 6: 8 -> 9: 4
+  pos 3: 6 -> 5: 4
+  pos 1: D -> B: 4
+  pos 2: Q -> D: 4
+  pos 6: 0 -> 2: 4
+  pos 2: D -> O: 4
+
+Epoch 10/45: Train Loss: 1.0844 | Val Loss: 0.4068 | Baseline Acc: 68.07% | MVCP Acc: 59.76% | LR: 7.98e-05
+  ✨ Accuracy Improved: 64.96% -> 68.07%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (68.07%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 11/45: 100%|█| 1416/1416 [08:01<00:00,  2.94it/s, loss=1.02, slot=0.772, risk
+  📊 Epoch avg: Loss=1.0719 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 11)
+    🔍 [STUDENT Ep 11] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.57) | MVCP: AYG7579
+    🔍 [STUDENT Ep 11] Track: track_10011 | GT: ODE3320 | Fused: DOE3320 (conf=0.47) | MVCP: BDK3320
+    🔍 [STUDENT Ep 11] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.52) | MVCP: DBC6817
+    🔍 [STUDENT Ep 11] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.55) | MVCP: BAE8708
+    🔍 [STUDENT Ep 11] Track: track_10047 | GT: LRA1832 | Fused: ERA1832 (conf=0.54) | MVCP: EBA1832
+    🔍 [STUDENT Ep 11] Track: track_10052 | GT: AVE1881 | Fused: AYE3843 (conf=0.29) | MVCP: AYE3882
+    🔍 [STUDENT Ep 11] Track: track_10068 | GT: AZL5022 | Fused: AZL9023 (conf=0.35) | MVCP: AZL5028
+    🔍 [STUDENT Ep 11] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.51) | MVCP: FQF8047
+    🔍 [STUDENT Ep 11] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 11] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.59) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 11):
+   Baseline (fused) accuracy : 68.37%
+   MVCP (per‑frame vote)     : 60.96%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 19
+  1 -> 3: 14
+  H -> N: 14
+  8 -> 6: 13
+  D -> B: 12
+  2 -> 3: 11
+  5 -> 9: 10
+  6 -> 4: 9
+  M -> N: 9
+  M -> H: 9
+  A -> B: 8
+  9 -> 5: 8
+  6 -> 5: 8
+  H -> M: 8
+  Q -> D: 7
+  C -> G: 7
+  W -> V: 7
+  D -> O: 6
+  9 -> 8: 6
+  4 -> 6: 6
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 4: 6 -> 8: 9
+  pos 3: 6 -> 8: 7
+  pos 1: H -> N: 7
+  pos 2: M -> H: 7
+  pos 5: 8 -> 6: 7
+  pos 3: 1 -> 3: 6
+  pos 2: H -> N: 6
+  pos 2: M -> N: 6
+  pos 4: C -> G: 6
+  pos 6: 5 -> 9: 5
+  pos 6: 6 -> 4: 5
+  pos 2: Q -> D: 5
+  pos 3: 9 -> 5: 5
+  pos 5: 1 -> 3: 5
+  pos 1: W -> V: 5
+  pos 3: 8 -> 6: 5
+  pos 4: 5 -> 9: 4
+  pos 2: W -> N: 4
+  pos 0: Q -> B: 4
+  pos 5: 6 -> 4: 4
+
+Epoch 11/45: Train Loss: 1.0719 | Val Loss: 0.3849 | Baseline Acc: 68.37% | MVCP Acc: 60.96% | LR: 7.94e-05
+  ✨ Accuracy Improved: 68.07% -> 68.37%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (68.37%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 12/45: 100%|█| 1416/1416 [08:00<00:00,  2.94it/s, loss=0.991, slot=0.764, ris
+  📊 Epoch avg: Loss=1.0474 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 12)
+
+📊 Validation Results (Epoch 12):
+   Baseline (fused) accuracy : 69.57%
+   MVCP (per‑frame vote)     : 62.26%
+
+📊 Top Character Confusions (epoch):
+  M -> H: 22
+  6 -> 8: 21
+  5 -> 6: 20
+  4 -> 6: 18
+  D -> B: 16
+  A -> B: 14
+  Q -> O: 13
+  R -> B: 13
+  3 -> 2: 11
+  8 -> 6: 11
+  D -> O: 8
+  1 -> 2: 7
+  5 -> 8: 7
+  M -> N: 7
+  3 -> 7: 6
+  2 -> 0: 6
+  8 -> 0: 6
+  Y -> V: 6
+  Q -> D: 6
+  N -> H: 6
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 13
+  pos 3: 6 -> 8: 10
+  pos 0: Q -> O: 8
+  pos 1: M -> H: 8
+  pos 3: 5 -> 6: 7
+  pos 4: 6 -> 8: 7
+  pos 3: 4 -> 6: 7
+  pos 2: D -> O: 7
+  pos 3: 8 -> 6: 7
+  pos 6: 1 -> 2: 6
+  pos 4: 5 -> 6: 6
+  pos 0: A -> B: 6
+  pos 2: R -> B: 6
+  pos 6: 4 -> 6: 6
+  pos 4: D -> B: 6
+  pos 1: Y -> V: 5
+  pos 2: D -> B: 5
+  pos 5: 4 -> 6: 5
+  pos 2: W -> N: 4
+  pos 6: 0 -> 8: 4
+
+Epoch 12/45: Train Loss: 1.0474 | Val Loss: 0.3872 | Baseline Acc: 69.57% | MVCP Acc: 62.26% | LR: 7.86e-05
+  ✨ Accuracy Improved: 68.37% -> 69.57%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (69.57%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 13/45: 100%|█| 1416/1416 [08:03<00:00,  2.93it/s, loss=1.11, slot=0.83, risk=
+  📊 Epoch avg: Loss=1.0304 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 13)
+    🔍 [STUDENT Ep 13] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.57) | MVCP: AYG7579
+    🔍 [STUDENT Ep 13] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.47) | MVCP: DQF3320
+    🔍 [STUDENT Ep 13] Track: track_10018 | GT: DRC6817 | Fused: QRC6817 (conf=0.52) | MVCP: QRC6817
+    🔍 [STUDENT Ep 13] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.55) | MVCP: BAE8708
+    🔍 [STUDENT Ep 13] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.52) | MVCP: LRA1832
+    🔍 [STUDENT Ep 13] Track: track_10052 | GT: AVE1881 | Fused: AVE3842 (conf=0.29) | MVCP: AVE9840
+    🔍 [STUDENT Ep 13] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.45) | MVCP: AZL5029
+    🔍 [STUDENT Ep 13] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.50) | MVCP: FQV9047
+    🔍 [STUDENT Ep 13] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.57) | MVCP: AXR3781
+    🔍 [STUDENT Ep 13] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.58) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 13):
+   Baseline (fused) accuracy : 71.07%
+   MVCP (per‑frame vote)     : 63.96%
+
+📊 Top Character Confusions (epoch):
+  M -> H: 19
+  6 -> 8: 17
+  1 -> 3: 15
+  4 -> 6: 11
+  1 -> 5: 11
+  R -> B: 10
+  8 -> 0: 10
+  A -> B: 9
+  D -> B: 9
+  M -> N: 7
+  D -> Q: 6
+  5 -> 9: 6
+  5 -> 0: 6
+  8 -> 6: 6
+  9 -> 5: 6
+  V -> W: 6
+  Y -> V: 6
+  Q -> D: 6
+  H -> N: 5
+  O -> Q: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 13
+  pos 3: 1 -> 3: 8
+  pos 3: 6 -> 8: 8
+  pos 4: 6 -> 8: 6
+  pos 1: M -> H: 6
+  pos 1: M -> N: 5
+  pos 3: 1 -> 5: 5
+  pos 4: 5 -> 9: 4
+  pos 4: 5 -> 0: 4
+  pos 1: R -> B: 4
+  pos 0: A -> B: 4
+  pos 3: 4 -> 6: 4
+  pos 6: 1 -> 5: 4
+  pos 2: Q -> D: 4
+  pos 2: D -> B: 4
+  pos 4: C -> G: 4
+  pos 1: N -> H: 4
+  pos 3: 8 -> 0: 4
+  pos 5: 4 -> 6: 4
+  pos 6: 1 -> 3: 4
+
+Epoch 13/45: Train Loss: 1.0304 | Val Loss: 0.3683 | Baseline Acc: 71.07% | MVCP Acc: 63.96% | LR: 7.76e-05
+  ✨ Accuracy Improved: 69.57% -> 71.07%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (71.07%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 14/45: 100%|█| 1416/1416 [07:59<00:00,  2.96it/s, loss=0.94, slot=0.732, risk
+  📊 Epoch avg: Loss=1.0175 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 14)
+
+📊 Validation Results (Epoch 14):
+   Baseline (fused) accuracy : 72.67%
+   MVCP (per‑frame vote)     : 64.86%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 23
+  H -> M: 15
+  V -> Y: 10
+  1 -> 3: 10
+  5 -> 9: 9
+  5 -> 6: 9
+  N -> H: 9
+  B -> D: 9
+  W -> V: 8
+  4 -> 6: 7
+  1 -> 2: 6
+  2 -> 3: 6
+  5 -> 0: 6
+  8 -> 0: 6
+  0 -> 8: 6
+  D -> O: 6
+  D -> B: 6
+  1 -> 7: 5
+  X -> Y: 5
+  8 -> 6: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 3: 6 -> 8: 9
+  pos 2: H -> M: 8
+  pos 1: V -> Y: 6
+  pos 4: 6 -> 8: 6
+  pos 6: 6 -> 8: 6
+  pos 3: 1 -> 3: 6
+  pos 2: D -> O: 5
+  pos 2: N -> H: 5
+  pos 1: B -> D: 5
+  pos 5: 1 -> 7: 4
+  pos 2: V -> Y: 4
+  pos 6: 4 -> 6: 4
+  pos 4: C -> G: 4
+  pos 1: N -> H: 4
+  pos 1: W -> V: 4
+  pos 2: W -> V: 4
+  pos 1: H -> M: 4
+  pos 4: 5 -> 9: 3
+  pos 5: 9 -> 8: 3
+  pos 2: W -> M: 3
+
+Epoch 14/45: Train Loss: 1.0175 | Val Loss: 0.3568 | Baseline Acc: 72.67% | MVCP Acc: 64.86% | LR: 7.63e-05
+  ✨ Accuracy Improved: 71.07% -> 72.67%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (72.67%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 15/45: 100%|█| 1416/1416 [07:58<00:00,  2.96it/s, loss=0.976, slot=0.737, ris
+  📊 Epoch avg: Loss=0.9993 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 15)
+    🔍 [STUDENT Ep 15] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.57) | MVCP: AYG7579
+    🔍 [STUDENT Ep 15] Track: track_10011 | GT: ODE3320 | Fused: DOE3320 (conf=0.51) | MVCP: BDE3320
+    🔍 [STUDENT Ep 15] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.50) | MVCP: DRC6817
+    🔍 [STUDENT Ep 15] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.56) | MVCP: BAE8708
+    🔍 [STUDENT Ep 15] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.53) | MVCP: LRA1832
+    🔍 [STUDENT Ep 15] Track: track_10052 | GT: AVE1881 | Fused: AVE7842 (conf=0.33) | MVCP: AXE3880
+    🔍 [STUDENT Ep 15] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.48) | MVCP: AZL5028
+    🔍 [STUDENT Ep 15] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.49) | MVCP: FQV8047
+    🔍 [STUDENT Ep 15] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.57) | MVCP: AXR3781
+    🔍 [STUDENT Ep 15] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.59) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 15):
+   Baseline (fused) accuracy : 73.77%
+   MVCP (per‑frame vote)     : 67.57%
+
+📊 Top Character Confusions (epoch):
+  M -> H: 16
+  6 -> 8: 15
+  N -> H: 12
+  4 -> 6: 11
+  1 -> 3: 11
+  1 -> 7: 8
+  6 -> 4: 8
+  D -> B: 8
+  3 -> 7: 7
+  5 -> 6: 7
+  8 -> 6: 6
+  R -> B: 6
+  8 -> 9: 6
+  B -> D: 6
+  D -> O: 5
+  W -> N: 5
+  9 -> 5: 5
+  V -> Y: 5
+  9 -> 7: 5
+  H -> M: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 10
+  pos 3: 1 -> 3: 8
+  pos 3: 6 -> 8: 7
+  pos 2: N -> H: 7
+  pos 2: W -> N: 5
+  pos 5: 1 -> 7: 5
+  pos 4: 6 -> 8: 5
+  pos 6: 4 -> 6: 5
+  pos 1: M -> H: 5
+  pos 4: C -> G: 5
+  pos 3: 8 -> 6: 4
+  pos 1: N -> H: 4
+  pos 3: 1 -> 7: 3
+  pos 3: 3 -> 7: 3
+  pos 2: N -> M: 3
+  pos 4: 5 -> 6: 3
+  pos 1: R -> B: 3
+  pos 2: V -> Y: 3
+  pos 6: 6 -> 4: 3
+  pos 2: Y -> V: 3
+
+Epoch 15/45: Train Loss: 0.9993 | Val Loss: 0.3536 | Baseline Acc: 73.77% | MVCP Acc: 67.57% | LR: 7.47e-05
+  ✨ Accuracy Improved: 72.67% -> 73.77%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (73.77%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 16/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=1.01, slot=0.792, risk
+  📊 Epoch avg: Loss=0.9867 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 16)
+
+📊 Validation Results (Epoch 16):
+   Baseline (fused) accuracy : 74.07%
+   MVCP (per‑frame vote)     : 68.57%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 18
+  4 -> 6: 11
+  A -> B: 10
+  M -> H: 10
+  2 -> 0: 9
+  8 -> 0: 9
+  1 -> 5: 9
+  5 -> 9: 8
+  5 -> 6: 8
+  H -> M: 8
+  D -> O: 7
+  5 -> 0: 7
+  8 -> 6: 7
+  M -> N: 7
+  C -> G: 7
+  B -> D: 7
+  9 -> 5: 6
+  6 -> 4: 6
+  6 -> 0: 6
+  Y -> V: 6
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 4: 6 -> 8: 7
+  pos 2: M -> H: 7
+  pos 3: 6 -> 8: 7
+  pos 2: D -> O: 6
+  pos 4: C -> G: 6
+  pos 2: H -> M: 5
+  pos 1: N -> H: 5
+  pos 4: 5 -> 9: 4
+  pos 4: 5 -> 6: 4
+  pos 5: 2 -> 0: 4
+  pos 6: 9 -> 5: 4
+  pos 1: A -> B: 4
+  pos 1: M -> N: 4
+  pos 6: 6 -> 4: 4
+  pos 0: A -> B: 4
+  pos 3: 4 -> 6: 4
+  pos 6: 8 -> 0: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 6: 1 -> 5: 4
+
+Epoch 16/45: Train Loss: 0.9867 | Val Loss: 0.3422 | Baseline Acc: 74.07% | MVCP Acc: 68.57% | LR: 7.28e-05
+  ✨ Accuracy Improved: 73.77% -> 74.07%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (74.07%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 17/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.883, slot=0.658, ris
+  📊 Epoch avg: Loss=0.9757 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 17)
+    🔍 [STUDENT Ep 17] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.57) | MVCP: AYG7579
+    🔍 [STUDENT Ep 17] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.53) | MVCP: DQE3320
+    🔍 [STUDENT Ep 17] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.54) | MVCP: QRC6817
+    🔍 [STUDENT Ep 17] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.56) | MVCP: BAE8708
+    🔍 [STUDENT Ep 17] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.56) | MVCP: LRA1832
+    🔍 [STUDENT Ep 17] Track: track_10052 | GT: AVE1881 | Fused: AVE3882 (conf=0.33) | MVCP: AVE3845
+    🔍 [STUDENT Ep 17] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.47) | MVCP: ACL5022
+    🔍 [STUDENT Ep 17] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.54) | MVCP: FQV8047
+    🔍 [STUDENT Ep 17] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 17] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 17):
+   Baseline (fused) accuracy : 75.08%
+   MVCP (per‑frame vote)     : 67.67%
+
+📊 Top Character Confusions (epoch):
+  8 -> 6: 15
+  M -> H: 13
+  6 -> 4: 12
+  6 -> 8: 11
+  9 -> 5: 9
+  Y -> V: 9
+  1 -> 3: 8
+  2 -> 1: 8
+  B -> A: 7
+  Q -> D: 7
+  D -> B: 6
+  9 -> 8: 5
+  H -> N: 5
+  5 -> 6: 5
+  4 -> 6: 5
+  3 -> 7: 5
+  0 -> 8: 5
+  E -> C: 5
+  3 -> 1: 5
+  N -> H: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 9
+  pos 5: 8 -> 6: 7
+  pos 2: M -> H: 7
+  pos 3: 8 -> 6: 7
+  pos 1: M -> H: 6
+  pos 4: 6 -> 8: 5
+  pos 2: Q -> D: 5
+  pos 1: Y -> V: 5
+  pos 4: C -> G: 5
+  pos 3: 1 -> 3: 4
+  pos 2: W -> M: 4
+  pos 0: B -> A: 4
+  pos 6: 9 -> 5: 4
+  pos 2: Y -> V: 4
+  pos 3: 6 -> 8: 4
+  pos 4: 5 -> 6: 3
+  pos 2: N -> M: 3
+  pos 1: E -> C: 3
+  pos 6: 3 -> 1: 3
+  pos 3: 9 -> 8: 3
+
+Epoch 17/45: Train Loss: 0.9757 | Val Loss: 0.3300 | Baseline Acc: 75.08% | MVCP Acc: 67.67% | LR: 7.07e-05
+  ✨ Accuracy Improved: 74.07% -> 75.08%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (75.08%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 18/45: 100%|█| 1416/1416 [08:00<00:00,  2.94it/s, loss=0.956, slot=0.733, ris
+  📊 Epoch avg: Loss=0.9695 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 18)
+
+📊 Validation Results (Epoch 18):
+   Baseline (fused) accuracy : 75.48%
+   MVCP (per‑frame vote)     : 68.87%
+
+📊 Top Character Confusions (epoch):
+  M -> H: 17
+  6 -> 8: 13
+  8 -> 0: 9
+  M -> N: 8
+  4 -> 6: 8
+  D -> O: 7
+  3 -> 7: 7
+  8 -> 9: 7
+  N -> H: 7
+  X -> Y: 6
+  5 -> 9: 6
+  C -> E: 6
+  B -> A: 6
+  V -> Y: 6
+  O -> Q: 6
+  B -> R: 6
+  1 -> 7: 5
+  5 -> 6: 5
+  8 -> 6: 5
+  6 -> 4: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 12
+  pos 3: 6 -> 8: 8
+  pos 1: X -> Y: 5
+  pos 2: D -> O: 5
+  pos 2: M -> N: 5
+  pos 1: N -> H: 5
+  pos 2: W -> N: 4
+  pos 1: C -> E: 4
+  pos 4: 5 -> 6: 4
+  pos 1: V -> Y: 4
+  pos 2: O -> Q: 4
+  pos 6: 4 -> 6: 4
+  pos 2: B -> R: 4
+  pos 4: C -> G: 4
+  pos 1: M -> H: 4
+  pos 4: 5 -> 9: 3
+  pos 3: 3 -> 7: 3
+  pos 0: B -> A: 3
+  pos 5: 1 -> 7: 3
+  pos 1: M -> N: 3
+
+Epoch 18/45: Train Loss: 0.9695 | Val Loss: 0.3290 | Baseline Acc: 75.48% | MVCP Acc: 68.87% | LR: 6.84e-05
+  ✨ Accuracy Improved: 75.08% -> 75.48%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (75.48%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 19/45: 100%|█| 1416/1416 [08:00<00:00,  2.95it/s, loss=0.977, slot=0.746, ris
+  📊 Epoch avg: Loss=0.9578 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 19)
+    🔍 [STUDENT Ep 19] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 19] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.53) | MVCP: DQE3320
+    🔍 [STUDENT Ep 19] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.54) | MVCP: ORC6817
+    🔍 [STUDENT Ep 19] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.56) | MVCP: BAE8708
+    🔍 [STUDENT Ep 19] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 19] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.32) | MVCP: AYV7840
+    🔍 [STUDENT Ep 19] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.52) | MVCP: AZL5022
+    🔍 [STUDENT Ep 19] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.52) | MVCP: FQV8047
+    🔍 [STUDENT Ep 19] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 19] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 19):
+   Baseline (fused) accuracy : 75.38%
+   MVCP (per‑frame vote)     : 68.67%
+
+📊 Top Character Confusions (epoch):
+  M -> H: 12
+  6 -> 8: 11
+  Q -> O: 10
+  4 -> 6: 10
+  2 -> 3: 9
+  V -> Y: 9
+  6 -> 4: 8
+  D -> B: 8
+  1 -> 7: 7
+  5 -> 9: 7
+  3 -> 7: 7
+  8 -> 6: 7
+  A -> B: 6
+  D -> O: 6
+  2 -> 1: 6
+  N -> H: 6
+  0 -> 5: 6
+  5 -> 6: 5
+  0 -> 8: 5
+  8 -> 9: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 7
+  pos 0: Q -> O: 6
+  pos 5: 1 -> 7: 5
+  pos 2: V -> Y: 5
+  pos 6: 6 -> 4: 5
+  pos 1: M -> H: 5
+  pos 4: C -> G: 5
+  pos 1: N -> H: 5
+  pos 3: 6 -> 8: 5
+  pos 2: N -> M: 4
+  pos 1: V -> Y: 4
+  pos 0: A -> B: 4
+  pos 2: Q -> D: 4
+  pos 2: D -> O: 4
+  pos 1: Q -> O: 4
+  pos 6: 4 -> 6: 4
+  pos 3: 8 -> 6: 4
+  pos 5: 4 -> 6: 4
+  pos 1: X -> Y: 3
+  pos 4: 5 -> 9: 3
+
+Epoch 19/45: Train Loss: 0.9578 | Val Loss: 0.3275 | Baseline Acc: 75.38% | MVCP Acc: 68.67% | LR: 6.58e-05
+  Patience: 1/10
+Ep 20/45: 100%|█| 1416/1416 [08:01<00:00,  2.94it/s, loss=0.891, slot=0.711, ris
+  📊 Epoch avg: Loss=0.9503 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 20)
+    🔍 [STUDENT Ep 20] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 20] Track: track_10011 | GT: ODE3320 | Fused: DOE3320 (conf=0.53) | MVCP: DQE3320
+    🔍 [STUDENT Ep 20] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.54) | MVCP: DRC6817
+    🔍 [STUDENT Ep 20] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.56) | MVCP: BAE8708
+    🔍 [STUDENT Ep 20] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.53) | MVCP: LRA1832
+    🔍 [STUDENT Ep 20] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.35) | MVCP: AYC3840
+    🔍 [STUDENT Ep 20] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.46) | MVCP: AZL5029
+    🔍 [STUDENT Ep 20] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.49) | MVCP: FQV8047
+    🔍 [STUDENT Ep 20] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 20] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+    🔍 [STUDENT Ep 20] Track: track_10114 | GT: AXK1580 | Fused: AXG1980 (conf=0.39) | MVCP: AXS1380
+    🔍 [STUDENT Ep 20] Track: track_10115 | GT: AQS1094 | Fused: AOS1094 (conf=0.51) | MVCP: AOS1094
+    🔍 [STUDENT Ep 20] Track: track_10117 | GT: AVX5540 | Fused: AVX5540 (conf=0.58) | MVCP: AVX5540
+    🔍 [STUDENT Ep 20] Track: track_10123 | GT: HPW9584 | Fused: NPN9584 (conf=0.53) | MVCP: NPW9584
+    🔍 [STUDENT Ep 20] Track: track_10128 | GT: JKR4017 | Fused: JHW0017 (conf=0.38) | MVCP: JKW3017
+    🔍 [STUDENT Ep 20] Track: track_10134 | GT: BBJ1227 | Fused: BBJ1325 (conf=0.43) | MVCP: BBJ1327
+    🔍 [STUDENT Ep 20] Track: track_10148 | GT: ANT0268 | Fused: ANT0268 (conf=0.55) | MVCP: AWT0268
+    🔍 [STUDENT Ep 20] Track: track_10153 | GT: KGL5248 | Fused: AGL5248 (conf=0.50) | MVCP: AGL5248
+    🔍 [STUDENT Ep 20] Track: track_10154 | GT: PCY4077 | Fused: PCY4077 (conf=0.57) | MVCP: PCY4077
+    🔍 [STUDENT Ep 20] Track: track_10162 | GT: AVW1229 | Fused: AVM4229 (conf=0.50) | MVCP: AVM4229
+
+📊 Validation Results (Epoch 20):
+   Baseline (fused) accuracy : 76.68%
+   MVCP (per‑frame vote)     : 69.17%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 16
+  M -> H: 14
+  8 -> 0: 10
+  M -> N: 9
+  6 -> 4: 9
+  V -> Y: 8
+  5 -> 9: 8
+  N -> H: 8
+  D -> O: 7
+  Q -> O: 7
+  8 -> 6: 7
+  8 -> 9: 7
+  1 -> 7: 6
+  R -> B: 6
+  3 -> 7: 5
+  Q -> U: 5
+  9 -> 5: 5
+  V -> W: 5
+  C -> G: 5
+  2 -> 5: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 8
+  pos 4: 6 -> 8: 6
+  pos 1: M -> H: 6
+  pos 1: V -> Y: 5
+  pos 5: 1 -> 7: 5
+  pos 6: 6 -> 4: 5
+  pos 3: 6 -> 8: 5
+  pos 2: D -> O: 5
+  pos 4: C -> G: 5
+  pos 1: N -> H: 5
+  pos 3: 8 -> 0: 5
+  pos 4: 5 -> 9: 4
+  pos 1: Q -> O: 4
+  pos 1: M -> N: 4
+  pos 2: M -> N: 4
+  pos 3: 2 -> 5: 4
+  pos 3: 3 -> 7: 3
+  pos 2: V -> Y: 3
+  pos 5: 8 -> 9: 3
+  pos 5: 6 -> 8: 3
+
+Epoch 20/45: Train Loss: 0.9503 | Val Loss: 0.3302 | Baseline Acc: 76.68% | MVCP Acc: 69.17% | LR: 6.30e-05
+  ✨ Accuracy Improved: 75.48% -> 76.68%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (76.68%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 21/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=1.04, slot=0.821, risk
+  📊 Epoch avg: Loss=0.9430 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 21)
+    🔍 [STUDENT Ep 21] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 21] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQF3320
+    🔍 [STUDENT Ep 21] Track: track_10018 | GT: DRC6817 | Fused: QRC6817 (conf=0.54) | MVCP: QRC6817
+    🔍 [STUDENT Ep 21] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 21] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 21] Track: track_10052 | GT: AVE1881 | Fused: AVE7880 (conf=0.40) | MVCP: AVS5840
+    🔍 [STUDENT Ep 21] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.51) | MVCP: AZL5022
+    🔍 [STUDENT Ep 21] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.54) | MVCP: FQV8047
+    🔍 [STUDENT Ep 21] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 21] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.59) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 21):
+   Baseline (fused) accuracy : 76.98%
+   MVCP (per‑frame vote)     : 69.27%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 23
+  M -> H: 12
+  4 -> 6: 9
+  1 -> 7: 7
+  2 -> 3: 7
+  1 -> 3: 7
+  5 -> 9: 6
+  D -> Q: 5
+  9 -> 5: 5
+  V -> Y: 5
+  6 -> 4: 5
+  8 -> 0: 5
+  6 -> 5: 5
+  Y -> V: 5
+  O -> Q: 5
+  R -> B: 5
+  N -> H: 5
+  B -> R: 5
+  D -> O: 5
+  5 -> 6: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 3: 6 -> 8: 8
+  pos 2: M -> H: 8
+  pos 6: 6 -> 8: 7
+  pos 5: 1 -> 7: 5
+  pos 4: 6 -> 8: 5
+  pos 6: 4 -> 6: 5
+  pos 2: D -> O: 5
+  pos 1: M -> H: 4
+  pos 6: 6 -> 4: 4
+  pos 3: 6 -> 5: 4
+  pos 2: Q -> D: 4
+  pos 1: N -> H: 4
+  pos 0: D -> Q: 3
+  pos 4: 5 -> 6: 3
+  pos 4: 5 -> 9: 3
+  pos 2: V -> Y: 3
+  pos 3: 4 -> 6: 3
+  pos 5: 6 -> 8: 3
+  pos 1: Y -> V: 3
+  pos 1: E -> C: 3
+
+Epoch 21/45: Train Loss: 0.9430 | Val Loss: 0.3119 | Baseline Acc: 76.98% | MVCP Acc: 69.27% | LR: 6.01e-05
+  ✨ Accuracy Improved: 76.68% -> 76.98%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (76.98%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 22/45: 100%|█| 1416/1416 [08:07<00:00,  2.91it/s, loss=0.894, slot=0.678, ris
+  📊 Epoch avg: Loss=0.9361 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 22)
+
+📊 Validation Results (Epoch 22):
+   Baseline (fused) accuracy : 74.87%
+   MVCP (per‑frame vote)     : 69.07%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 15
+  5 -> 6: 14
+  1 -> 3: 13
+  H -> N: 10
+  6 -> 8: 9
+  Q -> O: 8
+  8 -> 6: 8
+  M -> N: 8
+  Y -> V: 8
+  D -> O: 7
+  2 -> 3: 6
+  5 -> 9: 6
+  B -> R: 6
+  H -> M: 6
+  M -> H: 6
+  0 -> 8: 5
+  9 -> 5: 5
+  8 -> 9: 5
+  6 -> 0: 5
+  4 -> 6: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 7
+  pos 2: D -> O: 7
+  pos 3: 1 -> 3: 6
+  pos 1: Q -> O: 6
+  pos 4: 5 -> 6: 5
+  pos 3: 5 -> 6: 5
+  pos 3: 6 -> 4: 5
+  pos 5: 1 -> 3: 5
+  pos 1: H -> N: 5
+  pos 3: 8 -> 6: 5
+  pos 1: E -> C: 4
+  pos 2: H -> N: 4
+  pos 1: M -> N: 4
+  pos 4: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 1: Y -> V: 4
+  pos 2: M -> N: 4
+  pos 4: C -> G: 4
+  pos 1: N -> H: 4
+  pos 0: B -> R: 4
+
+Epoch 22/45: Train Loss: 0.9361 | Val Loss: 0.3289 | Baseline Acc: 74.87% | MVCP Acc: 69.07% | LR: 5.70e-05
+  Patience: 1/10
+Ep 23/45: 100%|█| 1416/1416 [08:35<00:00,  2.75it/s, loss=0.972, slot=0.766, ris
+  📊 Epoch avg: Loss=0.9278 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 23)
+    🔍 [STUDENT Ep 23] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 23] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.54) | MVCP: DQE3320
+    🔍 [STUDENT Ep 23] Track: track_10018 | GT: DRC6817 | Fused: ORC6817 (conf=0.51) | MVCP: QRC6817
+    🔍 [STUDENT Ep 23] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 23] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.56) | MVCP: LRA1832
+    🔍 [STUDENT Ep 23] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.38) | MVCP: AVE1880
+    🔍 [STUDENT Ep 23] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.49) | MVCP: AZL5022
+    🔍 [STUDENT Ep 23] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.50) | MVCP: FSV8047
+    🔍 [STUDENT Ep 23] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 23] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 23):
+   Baseline (fused) accuracy : 75.88%
+   MVCP (per‑frame vote)     : 70.77%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 14
+  D -> B: 13
+  6 -> 4: 11
+  8 -> 6: 11
+  M -> H: 11
+  D -> O: 9
+  5 -> 6: 9
+  5 -> 9: 6
+  M -> N: 6
+  8 -> 0: 6
+  3 -> 1: 6
+  H -> N: 5
+  V -> Y: 5
+  1 -> 3: 5
+  Y -> V: 5
+  6 -> 0: 5
+  R -> Q: 5
+  2 -> 1: 5
+  1 -> 7: 4
+  Q -> O: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 8
+  pos 2: D -> O: 7
+  pos 6: 6 -> 4: 6
+  pos 3: 6 -> 8: 6
+  pos 4: 6 -> 8: 5
+  pos 2: D -> B: 5
+  pos 5: 8 -> 6: 5
+  pos 5: 6 -> 4: 4
+  pos 1: V -> Y: 4
+  pos 4: D -> B: 4
+  pos 1: Q -> O: 3
+  pos 3: 3 -> 7: 3
+  pos 4: 5 -> 6: 3
+  pos 2: H -> N: 3
+  pos 6: 9 -> 5: 3
+  pos 5: 1 -> 7: 3
+  pos 1: M -> N: 3
+  pos 3: 1 -> 3: 3
+  pos 2: Y -> V: 3
+  pos 6: 5 -> 6: 3
+
+Epoch 23/45: Train Loss: 0.9278 | Val Loss: 0.3183 | Baseline Acc: 75.88% | MVCP Acc: 70.77% | LR: 5.38e-05
+  Patience: 2/10
+Ep 24/45: 100%|█| 1416/1416 [08:48<00:00,  2.68it/s, loss=0.966, slot=0.76, risk
+  📊 Epoch avg: Loss=0.9219 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 24)
+
+📊 Validation Results (Epoch 24):
+   Baseline (fused) accuracy : 77.08%
+   MVCP (per‑frame vote)     : 70.87%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 14
+  M -> H: 13
+  Q -> O: 10
+  M -> N: 9
+  1 -> 2: 8
+  8 -> 9: 8
+  D -> O: 8
+  5 -> 9: 7
+  6 -> 4: 7
+  Y -> V: 6
+  R -> B: 6
+  N -> H: 6
+  V -> Y: 5
+  T -> I: 5
+  D -> B: 5
+  D -> Q: 4
+  B -> A: 4
+  8 -> 6: 4
+  A -> B: 4
+  9 -> 5: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 8
+  pos 2: D -> O: 7
+  pos 4: 6 -> 8: 6
+  pos 6: 1 -> 2: 5
+  pos 2: M -> N: 5
+  pos 1: M -> H: 5
+  pos 1: N -> H: 5
+  pos 1: Q -> O: 4
+  pos 1: M -> N: 4
+  pos 2: Q -> O: 4
+  pos 1: E -> C: 4
+  pos 0: D -> Q: 3
+  pos 1: V -> Y: 3
+  pos 4: 5 -> 9: 3
+  pos 0: B -> A: 3
+  pos 6: 9 -> 5: 3
+  pos 6: 6 -> 4: 3
+  pos 5: 6 -> 8: 3
+  pos 6: 8 -> 9: 3
+  pos 3: 6 -> 5: 3
+
+Epoch 24/45: Train Loss: 0.9219 | Val Loss: 0.3085 | Baseline Acc: 77.08% | MVCP Acc: 70.87% | LR: 5.05e-05
+  ✨ Accuracy Improved: 76.98% -> 77.08%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (77.08%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 25/45: 100%|█| 1416/1416 [08:30<00:00,  2.77it/s, loss=0.872, slot=0.678, ris
+  📊 Epoch avg: Loss=0.9157 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 25)
+    🔍 [STUDENT Ep 25] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 25] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 25] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.52) | MVCP: QRC6817
+    🔍 [STUDENT Ep 25] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 25] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.56) | MVCP: LRA1832
+    🔍 [STUDENT Ep 25] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.41) | MVCP: AVE7880
+    🔍 [STUDENT Ep 25] Track: track_10068 | GT: AZL5022 | Fused: AZL6022 (conf=0.47) | MVCP: AZL5029
+    🔍 [STUDENT Ep 25] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.52) | MVCP: FQV8047
+    🔍 [STUDENT Ep 25] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 25] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 25):
+   Baseline (fused) accuracy : 77.58%
+   MVCP (per‑frame vote)     : 71.47%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 14
+  6 -> 8: 14
+  5 -> 6: 10
+  O -> Q: 9
+  1 -> 3: 9
+  1 -> 7: 8
+  M -> H: 8
+  8 -> 6: 7
+  D -> Q: 6
+  5 -> 9: 6
+  V -> Y: 6
+  D -> O: 6
+  3 -> 7: 5
+  9 -> 5: 5
+  8 -> 9: 5
+  N -> H: 5
+  N -> M: 5
+  B -> R: 5
+  H -> M: 5
+  B -> D: 5
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 7
+  pos 3: 6 -> 8: 6
+  pos 4: 6 -> 8: 6
+  pos 2: D -> O: 6
+  pos 2: M -> H: 6
+  pos 3: 5 -> 6: 5
+  pos 2: O -> Q: 5
+  pos 5: 1 -> 7: 5
+  pos 5: 6 -> 4: 5
+  pos 4: 5 -> 6: 4
+  pos 2: N -> M: 4
+  pos 4: C -> G: 4
+  pos 5: 1 -> 3: 4
+  pos 1: N -> H: 4
+  pos 3: 1 -> 3: 4
+  pos 4: 5 -> 9: 3
+  pos 3: 3 -> 7: 3
+  pos 1: A -> B: 3
+  pos 5: 3 -> 2: 3
+  pos 6: 9 -> 5: 3
+
+Epoch 25/45: Train Loss: 0.9157 | Val Loss: 0.3124 | Baseline Acc: 77.58% | MVCP Acc: 71.47% | LR: 4.72e-05
+  ✨ Accuracy Improved: 77.08% -> 77.58%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (77.58%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 26/45: 100%|█| 1416/1416 [08:13<00:00,  2.87it/s, loss=0.956, slot=0.72, risk
+  📊 Epoch avg: Loss=0.9095 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 26)
+
+📊 Validation Results (Epoch 26):
+   Baseline (fused) accuracy : 77.48%
+   MVCP (per‑frame vote)     : 72.07%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 15
+  6 -> 8: 10
+  8 -> 6: 8
+  V -> Y: 7
+  9 -> 5: 7
+  4 -> 6: 7
+  Q -> O: 6
+  3 -> 2: 6
+  0 -> 2: 6
+  D -> O: 6
+  5 -> 9: 6
+  5 -> 6: 5
+  1 -> 3: 5
+  M -> N: 5
+  V -> W: 5
+  D -> B: 5
+  3 -> 1: 5
+  M -> H: 5
+  B -> D: 5
+  D -> Q: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 5: 6 -> 4: 7
+  pos 6: 6 -> 4: 6
+  pos 1: V -> Y: 5
+  pos 1: Q -> O: 5
+  pos 2: D -> O: 5
+  pos 3: 6 -> 8: 5
+  pos 6: 9 -> 5: 4
+  pos 3: 1 -> 3: 4
+  pos 4: 6 -> 8: 4
+  pos 6: 4 -> 6: 4
+  pos 4: G -> C: 4
+  pos 0: D -> Q: 3
+  pos 4: 5 -> 6: 3
+  pos 1: V -> W: 3
+  pos 2: M -> N: 3
+  pos 2: Q -> D: 3
+  pos 2: O -> U: 3
+  pos 6: 5 -> 9: 3
+  pos 2: M -> H: 3
+  pos 5: 2 -> 1: 3
+
+Epoch 26/45: Train Loss: 0.9095 | Val Loss: 0.3023 | Baseline Acc: 77.48% | MVCP Acc: 72.07% | LR: 4.37e-05
+  Patience: 1/10
+Ep 27/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.788, slot=0.635, ris
+  📊 Epoch avg: Loss=0.9053 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 27)
+    🔍 [STUDENT Ep 27] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 27] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.51) | MVCP: DQE3320
+    🔍 [STUDENT Ep 27] Track: track_10018 | GT: DRC6817 | Fused: ORC6817 (conf=0.51) | MVCP: ORC6817
+    🔍 [STUDENT Ep 27] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.56) | MVCP: BAE8708
+    🔍 [STUDENT Ep 27] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 27] Track: track_10052 | GT: AVE1881 | Fused: AVE3882 (conf=0.37) | MVCP: AVV3845
+    🔍 [STUDENT Ep 27] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.52) | MVCP: AZL5020
+    🔍 [STUDENT Ep 27] Track: track_10070 | GT: FQV8047 | Fused: FGV8047 (conf=0.52) | MVCP: FQV8047
+    🔍 [STUDENT Ep 27] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 27] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 27):
+   Baseline (fused) accuracy : 78.58%
+   MVCP (per‑frame vote)     : 73.37%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 15
+  6 -> 8: 15
+  Q -> D: 8
+  8 -> 9: 8
+  H -> M: 7
+  9 -> 5: 6
+  D -> B: 6
+  0 -> 2: 5
+  0 -> 8: 5
+  B -> R: 5
+  2 -> 1: 5
+  N -> H: 5
+  M -> H: 5
+  O -> D: 4
+  1 -> 3: 4
+  1 -> 2: 4
+  5 -> 9: 4
+  H -> N: 4
+  8 -> 6: 4
+  V -> Y: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 10
+  pos 3: 6 -> 8: 9
+  pos 4: 6 -> 8: 5
+  pos 5: 6 -> 4: 4
+  pos 2: Q -> D: 4
+  pos 2: H -> M: 4
+  pos 4: C -> G: 4
+  pos 1: N -> H: 4
+  pos 2: M -> H: 4
+  pos 3: 1 -> 3: 3
+  pos 6: 9 -> 5: 3
+  pos 5: 8 -> 9: 3
+  pos 1: Q -> D: 3
+  pos 5: 2 -> 1: 3
+  pos 5: 9 -> 1: 3
+  pos 6: 1 -> 2: 2
+  pos 4: 5 -> 9: 2
+  pos 4: 2 -> 3: 2
+  pos 6: 7 -> 1: 2
+  pos 0: K -> A: 2
+
+Epoch 27/45: Train Loss: 0.9053 | Val Loss: 0.3012 | Baseline Acc: 78.58% | MVCP Acc: 73.37% | LR: 4.02e-05
+  ✨ Accuracy Improved: 77.58% -> 78.58%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (78.58%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 28/45: 100%|█| 1416/1416 [08:00<00:00,  2.95it/s, loss=0.883, slot=0.681, ris
+  📊 Epoch avg: Loss=0.8991 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 28)
+
+📊 Validation Results (Epoch 28):
+   Baseline (fused) accuracy : 79.28%
+   MVCP (per‑frame vote)     : 73.07%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 13
+  4 -> 6: 8
+  8 -> 6: 7
+  5 -> 6: 7
+  1 -> 7: 6
+  Y -> V: 6
+  N -> H: 6
+  D -> O: 5
+  Q -> D: 5
+  6 -> 4: 5
+  M -> N: 5
+  V -> W: 5
+  9 -> 5: 5
+  2 -> 3: 5
+  H -> M: 5
+  R -> B: 5
+  D -> B: 5
+  V -> Y: 4
+  8 -> 9: 4
+  0 -> 8: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 3: 6 -> 8: 5
+  pos 1: N -> H: 5
+  pos 4: 5 -> 6: 4
+  pos 6: 6 -> 4: 4
+  pos 3: 4 -> 6: 4
+  pos 4: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 3: 8 -> 6: 4
+  pos 0: Q -> B: 4
+  pos 2: H -> M: 4
+  pos 4: C -> G: 4
+  pos 5: 1 -> 7: 3
+  pos 1: V -> W: 3
+  pos 2: D -> O: 3
+  pos 2: M -> N: 3
+  pos 2: Q -> D: 3
+  pos 6: 4 -> 6: 3
+  pos 5: 0 -> 5: 3
+  pos 2: N -> M: 3
+  pos 3: 1 -> 3: 3
+
+Epoch 28/45: Train Loss: 0.8991 | Val Loss: 0.2992 | Baseline Acc: 79.28% | MVCP Acc: 73.07% | LR: 3.68e-05
+  ✨ Accuracy Improved: 78.58% -> 79.28%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (79.28%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 29/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.895, slot=0.708, ris
+  📊 Epoch avg: Loss=0.8935 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 29)
+    🔍 [STUDENT Ep 29] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 29] Track: track_10011 | GT: ODE3320 | Fused: DOE3320 (conf=0.52) | MVCP: DQE3320
+    🔍 [STUDENT Ep 29] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.52) | MVCP: ORC6817
+    🔍 [STUDENT Ep 29] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 29] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 29] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.40) | MVCP: AVE7880
+    🔍 [STUDENT Ep 29] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.51) | MVCP: AZL5022
+    🔍 [STUDENT Ep 29] Track: track_10070 | GT: FQV8047 | Fused: FGV8047 (conf=0.51) | MVCP: FGV8047
+    🔍 [STUDENT Ep 29] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 29] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 29):
+   Baseline (fused) accuracy : 79.18%
+   MVCP (per‑frame vote)     : 72.67%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 13
+  5 -> 6: 9
+  6 -> 4: 9
+  H -> M: 8
+  D -> O: 6
+  5 -> 9: 6
+  Q -> O: 6
+  5 -> 0: 6
+  D -> B: 6
+  N -> H: 6
+  3 -> 2: 5
+  8 -> 6: 5
+  4 -> 6: 5
+  8 -> 9: 5
+  Q -> D: 5
+  3 -> 1: 5
+  2 -> 1: 5
+  V -> Y: 4
+  6 -> 0: 4
+  Y -> V: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 1: Q -> O: 5
+  pos 4: 5 -> 6: 5
+  pos 2: D -> O: 5
+  pos 4: 6 -> 8: 5
+  pos 3: 6 -> 8: 5
+  pos 4: 5 -> 9: 4
+  pos 6: 6 -> 4: 4
+  pos 5: 6 -> 4: 4
+  pos 2: H -> M: 4
+  pos 4: C -> G: 4
+  pos 1: N -> H: 4
+  pos 1: H -> M: 4
+  pos 6: 9 -> 5: 3
+  pos 2: Y -> V: 3
+  pos 2: Q -> D: 3
+  pos 1: E -> C: 3
+  pos 6: 4 -> 6: 3
+  pos 2: D -> B: 3
+  pos 0: Q -> B: 3
+  pos 3: 3 -> 1: 3
+
+Epoch 29/45: Train Loss: 0.8935 | Val Loss: 0.2985 | Baseline Acc: 79.18% | MVCP Acc: 72.67% | LR: 3.33e-05
+  Patience: 1/10
+Ep 30/45: 100%|█| 1416/1416 [08:00<00:00,  2.95it/s, loss=0.916, slot=0.664, ris
+  📊 Epoch avg: Loss=0.8909 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 30)
+    🔍 [STUDENT Ep 30] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 30] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 30] Track: track_10018 | GT: DRC6817 | Fused: ORC6817 (conf=0.52) | MVCP: ORC6817
+    🔍 [STUDENT Ep 30] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 30] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 30] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.40) | MVCP: AVE1860
+    🔍 [STUDENT Ep 30] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.55) | MVCP: AZL5022
+    🔍 [STUDENT Ep 30] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.55) | MVCP: FQV8047
+    🔍 [STUDENT Ep 30] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 30] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+    🔍 [STUDENT Ep 30] Track: track_10114 | GT: AXK1580 | Fused: AYG1580 (conf=0.44) | MVCP: AYK1280
+    🔍 [STUDENT Ep 30] Track: track_10115 | GT: AQS1094 | Fused: AOS1084 (conf=0.54) | MVCP: AQS1094
+    🔍 [STUDENT Ep 30] Track: track_10117 | GT: AVX5540 | Fused: AVX5540 (conf=0.59) | MVCP: AVX5540
+    🔍 [STUDENT Ep 30] Track: track_10123 | GT: HPW9584 | Fused: NPW9584 (conf=0.52) | MVCP: HPW9584
+    🔍 [STUDENT Ep 30] Track: track_10128 | GT: JKR4017 | Fused: JKR2017 (conf=0.47) | MVCP: JKW2017
+    🔍 [STUDENT Ep 30] Track: track_10134 | GT: BBJ1227 | Fused: BBJ1221 (conf=0.52) | MVCP: BBJ1221
+    🔍 [STUDENT Ep 30] Track: track_10148 | GT: ANT0268 | Fused: ANT0268 (conf=0.56) | MVCP: ANT0268
+    🔍 [STUDENT Ep 30] Track: track_10153 | GT: KGL5248 | Fused: KGL5248 (conf=0.50) | MVCP: AGL5248
+    🔍 [STUDENT Ep 30] Track: track_10154 | GT: PCY4077 | Fused: PCY4073 (conf=0.55) | MVCP: PCY4077
+    🔍 [STUDENT Ep 30] Track: track_10162 | GT: AVW1229 | Fused: AVM4229 (conf=0.51) | MVCP: AVM4229
+
+📊 Validation Results (Epoch 30):
+   Baseline (fused) accuracy : 78.68%
+   MVCP (per‑frame vote)     : 72.17%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 12
+  8 -> 6: 10
+  0 -> 2: 8
+  M -> H: 8
+  5 -> 6: 7
+  3 -> 2: 7
+  Q -> D: 6
+  Y -> V: 6
+  5 -> 0: 6
+  D -> O: 5
+  3 -> 7: 5
+  6 -> 8: 5
+  0 -> 8: 5
+  3 -> 1: 5
+  4 -> 6: 5
+  N -> H: 5
+  B -> R: 5
+  B -> D: 5
+  1 -> 7: 4
+  Q -> O: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 2: M -> H: 5
+  pos 4: 5 -> 6: 4
+  pos 2: D -> O: 4
+  pos 2: Q -> D: 4
+  pos 3: 6 -> 4: 4
+  pos 1: N -> H: 4
+  pos 3: 8 -> 6: 4
+  pos 1: Q -> O: 3
+  pos 5: 6 -> 4: 3
+  pos 5: 0 -> 2: 3
+  pos 2: Y -> V: 3
+  pos 1: E -> C: 3
+  pos 2: O -> U: 3
+  pos 1: Y -> V: 3
+  pos 3: 3 -> 1: 3
+  pos 1: M -> H: 3
+  pos 3: 0 -> 2: 3
+  pos 2: X -> V: 3
+  pos 5: 0 -> 5: 3
+
+Epoch 30/45: Train Loss: 0.8909 | Val Loss: 0.2978 | Baseline Acc: 78.68% | MVCP Acc: 72.17% | LR: 3.00e-05
+  Patience: 2/10
+Ep 31/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.919, slot=0.707, ris
+  📊 Epoch avg: Loss=0.8850 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 31)
+    🔍 [STUDENT Ep 31] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 31] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 31] Track: track_10018 | GT: DRC6817 | Fused: QRC6817 (conf=0.52) | MVCP: QRC6817
+    🔍 [STUDENT Ep 31] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 31] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 31] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.43) | MVCP: AVE7842
+    🔍 [STUDENT Ep 31] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.50) | MVCP: AZL5022
+    🔍 [STUDENT Ep 31] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.55) | MVCP: FGV8047
+    🔍 [STUDENT Ep 31] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 31] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 31):
+   Baseline (fused) accuracy : 80.68%
+   MVCP (per‑frame vote)     : 74.07%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 10
+  8 -> 6: 9
+  6 -> 4: 8
+  5 -> 6: 7
+  Q -> D: 6
+  M -> N: 6
+  Y -> V: 6
+  1 -> 2: 5
+  3 -> 7: 5
+  3 -> 2: 5
+  D -> O: 5
+  5 -> 9: 5
+  2 -> 3: 5
+  B -> R: 5
+  C -> G: 5
+  V -> Y: 4
+  O -> Q: 4
+  4 -> 6: 4
+  9 -> 5: 4
+  M -> H: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 3: 6 -> 8: 5
+  pos 4: C -> G: 5
+  pos 4: 5 -> 6: 4
+  pos 4: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 2: D -> O: 4
+  pos 0: A -> R: 4
+  pos 3: 8 -> 6: 4
+  pos 1: M -> N: 3
+  pos 5: 6 -> 1: 3
+  pos 5: 8 -> 6: 3
+  pos 2: M -> N: 3
+  pos 2: O -> Q: 3
+  pos 2: Q -> D: 3
+  pos 1: E -> C: 3
+  pos 2: O -> U: 3
+  pos 6: 9 -> 5: 3
+  pos 2: M -> H: 3
+  pos 1: N -> H: 3
+
+Epoch 31/45: Train Loss: 0.8850 | Val Loss: 0.2961 | Baseline Acc: 80.68% | MVCP Acc: 74.07% | LR: 2.67e-05
+  ✨ Accuracy Improved: 79.28% -> 80.68%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (80.68%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 32/45: 100%|█| 1416/1416 [07:59<00:00,  2.96it/s, loss=0.897, slot=0.664, ris
+  📊 Epoch avg: Loss=0.8809 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 32)
+
+📊 Validation Results (Epoch 32):
+   Baseline (fused) accuracy : 79.48%
+   MVCP (per‑frame vote)     : 73.67%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 12
+  M -> H: 11
+  8 -> 6: 10
+  6 -> 4: 8
+  1 -> 2: 7
+  M -> N: 7
+  3 -> 2: 6
+  8 -> 9: 6
+  O -> Q: 6
+  N -> H: 6
+  B -> R: 6
+  D -> O: 5
+  5 -> 6: 5
+  Y -> V: 5
+  W -> V: 5
+  V -> Y: 4
+  5 -> 9: 4
+  0 -> 2: 4
+  Q -> D: 4
+  1 -> 5: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 7
+  pos 3: 8 -> 6: 6
+  pos 6: 6 -> 4: 5
+  pos 3: 6 -> 8: 5
+  pos 1: M -> N: 4
+  pos 2: O -> Q: 4
+  pos 4: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 2: D -> O: 4
+  pos 1: M -> H: 4
+  pos 1: N -> H: 4
+  pos 1: W -> V: 4
+  pos 6: 1 -> 2: 3
+  pos 2: W -> M: 3
+  pos 3: 3 -> 2: 3
+  pos 4: 5 -> 6: 3
+  pos 6: 9 -> 5: 3
+  pos 2: M -> N: 3
+  pos 2: Q -> D: 3
+  pos 1: C -> E: 3
+
+Epoch 32/45: Train Loss: 0.8809 | Val Loss: 0.2959 | Baseline Acc: 79.48% | MVCP Acc: 73.67% | LR: 2.34e-05
+  Patience: 1/10
+Ep 33/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.94, slot=0.72, risk=
+  📊 Epoch avg: Loss=0.8772 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 33)
+    🔍 [STUDENT Ep 33] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 33] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 33] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.53) | MVCP: DRC6817
+    🔍 [STUDENT Ep 33] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 33] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 33] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.38) | MVCP: AVE3880
+    🔍 [STUDENT Ep 33] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.52) | MVCP: AZL5022
+    🔍 [STUDENT Ep 33] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.53) | MVCP: FQV8047
+    🔍 [STUDENT Ep 33] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 33] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 33):
+   Baseline (fused) accuracy : 78.48%
+   MVCP (per‑frame vote)     : 73.27%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 9
+  6 -> 4: 7
+  8 -> 9: 7
+  4 -> 6: 7
+  8 -> 6: 6
+  Q -> D: 6
+  N -> H: 6
+  2 -> 1: 6
+  9 -> 5: 5
+  V -> Y: 5
+  M -> N: 5
+  0 -> 2: 5
+  0 -> 8: 5
+  M -> H: 5
+  5 -> 0: 5
+  8 -> 0: 5
+  C -> G: 5
+  W -> V: 5
+  D -> B: 5
+  O -> D: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 4: C -> G: 5
+  pos 6: 6 -> 4: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 2: M -> H: 4
+  pos 1: N -> H: 4
+  pos 2: W -> M: 3
+  pos 6: 9 -> 5: 3
+  pos 1: V -> Y: 3
+  pos 1: M -> N: 3
+  pos 4: 6 -> 8: 3
+  pos 2: Y -> V: 3
+  pos 2: D -> O: 3
+  pos 1: E -> C: 3
+  pos 2: O -> U: 3
+  pos 2: N -> M: 3
+  pos 6: 2 -> 1: 3
+  pos 3: 8 -> 0: 3
+  pos 1: W -> V: 3
+  pos 3: 6 -> 8: 3
+
+Epoch 33/45: Train Loss: 0.8772 | Val Loss: 0.2980 | Baseline Acc: 78.48% | MVCP Acc: 73.27% | LR: 2.04e-05
+  Patience: 2/10
+Ep 34/45: 100%|█| 1416/1416 [08:42<00:00,  2.71it/s, loss=0.879, slot=0.688, ris
+  📊 Epoch avg: Loss=0.8747 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 34)
+
+📊 Validation Results (Epoch 34):
+   Baseline (fused) accuracy : 78.78%
+   MVCP (per‑frame vote)     : 74.17%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 10
+  8 -> 6: 9
+  6 -> 8: 9
+  5 -> 9: 7
+  8 -> 9: 7
+  D -> O: 6
+  V -> Y: 6
+  8 -> 0: 6
+  Q -> D: 6
+  M -> H: 6
+  D -> B: 6
+  N -> H: 6
+  3 -> 2: 5
+  M -> N: 5
+  4 -> 6: 5
+  B -> R: 5
+  2 -> 1: 5
+  1 -> 3: 5
+  H -> M: 5
+  1 -> 7: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 2: M -> H: 5
+  pos 1: V -> Y: 4
+  pos 2: D -> O: 4
+  pos 2: Q -> D: 4
+  pos 3: 6 -> 8: 4
+  pos 4: C -> G: 4
+  pos 3: 8 -> 6: 4
+  pos 2: W -> M: 3
+  pos 3: 3 -> 2: 3
+  pos 6: 9 -> 5: 3
+  pos 5: 1 -> 7: 3
+  pos 1: M -> N: 3
+  pos 5: 6 -> 4: 3
+  pos 5: 8 -> 6: 3
+  pos 3: 6 -> 5: 3
+  pos 4: 6 -> 8: 3
+  pos 1: E -> C: 3
+  pos 6: 4 -> 6: 3
+  pos 6: 2 -> 1: 3
+
+Epoch 34/45: Train Loss: 0.8747 | Val Loss: 0.2937 | Baseline Acc: 78.78% | MVCP Acc: 74.17% | LR: 1.74e-05
+  Patience: 3/10
+Ep 35/45: 100%|█| 1416/1416 [09:13<00:00,  2.56it/s, loss=0.912, slot=0.678, ris
+  📊 Epoch avg: Loss=0.8703 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 35)
+    🔍 [STUDENT Ep 35] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 35] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.54) | MVCP: DQE3320
+    🔍 [STUDENT Ep 35] Track: track_10018 | GT: DRC6817 | Fused: ORC6817 (conf=0.52) | MVCP: ORC6817
+    🔍 [STUDENT Ep 35] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 35] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.57) | MVCP: LRA1832
+    🔍 [STUDENT Ep 35] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.42) | MVCP: AVE3880
+    🔍 [STUDENT Ep 35] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.53) | MVCP: AZL5022
+    🔍 [STUDENT Ep 35] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.51) | MVCP: FGV8047
+    🔍 [STUDENT Ep 35] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 35] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 35):
+   Baseline (fused) accuracy : 78.98%
+   MVCP (per‑frame vote)     : 73.27%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 9
+  6 -> 8: 9
+  V -> Y: 8
+  M -> H: 8
+  8 -> 6: 7
+  1 -> 2: 6
+  3 -> 2: 6
+  M -> N: 6
+  8 -> 9: 6
+  Q -> D: 6
+  4 -> 6: 6
+  1 -> 7: 5
+  0 -> 2: 5
+  8 -> 0: 5
+  N -> H: 5
+  B -> R: 5
+  2 -> 1: 5
+  1 -> 3: 5
+  W -> V: 5
+  D -> O: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 6
+  pos 1: V -> Y: 5
+  pos 6: 6 -> 4: 5
+  pos 1: M -> N: 4
+  pos 4: 6 -> 8: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 2: W -> M: 3
+  pos 3: 3 -> 2: 3
+  pos 5: 1 -> 7: 3
+  pos 2: V -> Y: 3
+  pos 3: 6 -> 0: 3
+  pos 5: 8 -> 6: 3
+  pos 2: Y -> V: 3
+  pos 2: D -> O: 3
+  pos 1: E -> C: 3
+  pos 4: C -> G: 3
+  pos 6: 2 -> 1: 3
+  pos 1: N -> H: 3
+  pos 3: 8 -> 0: 3
+
+Epoch 35/45: Train Loss: 0.8703 | Val Loss: 0.2934 | Baseline Acc: 78.98% | MVCP Acc: 73.27% | LR: 1.47e-05
+  Patience: 4/10
+Ep 36/45: 100%|█| 1416/1416 [08:10<00:00,  2.88it/s, loss=0.859, slot=0.672, ris
+  📊 Epoch avg: Loss=0.8680 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 36)
+
+📊 Validation Results (Epoch 36):
+   Baseline (fused) accuracy : 80.68%
+   MVCP (per‑frame vote)     : 73.97%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 10
+  6 -> 4: 9
+  5 -> 9: 7
+  Q -> D: 7
+  8 -> 6: 7
+  3 -> 2: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  M -> H: 6
+  5 -> 6: 5
+  V -> Y: 5
+  M -> N: 5
+  Y -> V: 5
+  0 -> 8: 5
+  4 -> 6: 5
+  B -> R: 5
+  C -> G: 5
+  O -> D: 4
+  1 -> 2: 4
+  0 -> 2: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 2: M -> H: 5
+  pos 4: C -> G: 5
+  pos 4: 5 -> 9: 4
+  pos 1: M -> N: 4
+  pos 3: 6 -> 8: 4
+  pos 4: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 2: V -> Y: 3
+  pos 1: E -> C: 3
+  pos 6: 4 -> 6: 3
+  pos 3: 8 -> 0: 3
+  pos 5: 0 -> 5: 3
+  pos 2: B -> R: 3
+  pos 3: 8 -> 6: 3
+  pos 6: 1 -> 2: 2
+  pos 6: 7 -> 1: 2
+  pos 2: W -> M: 2
+  pos 2: O -> D: 2
+
+Epoch 36/45: Train Loss: 0.8680 | Val Loss: 0.2922 | Baseline Acc: 80.68% | MVCP Acc: 73.97% | LR: 1.21e-05
+  Patience: 5/10
+Ep 37/45: 100%|█| 1416/1416 [08:02<00:00,  2.94it/s, loss=0.769, slot=0.614, ris
+  📊 Epoch avg: Loss=0.8654 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 37)
+    🔍 [STUDENT Ep 37] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 37] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 37] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.54) | MVCP: DRC6817
+    🔍 [STUDENT Ep 37] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 37] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.58) | MVCP: LRA1832
+    🔍 [STUDENT Ep 37] Track: track_10052 | GT: AVE1881 | Fused: AVE7882 (conf=0.38) | MVCP: AVE3840
+    🔍 [STUDENT Ep 37] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.51) | MVCP: AZL5022
+    🔍 [STUDENT Ep 37] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.51) | MVCP: FGV8047
+    🔍 [STUDENT Ep 37] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 37] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 37):
+   Baseline (fused) accuracy : 80.98%
+   MVCP (per‑frame vote)     : 75.38%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 10
+  8 -> 6: 8
+  6 -> 8: 8
+  5 -> 6: 7
+  5 -> 9: 7
+  M -> N: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  Q -> O: 6
+  0 -> 8: 6
+  1 -> 2: 5
+  Y -> V: 5
+  3 -> 2: 5
+  4 -> 6: 5
+  M -> H: 5
+  2 -> 1: 5
+  V -> Y: 4
+  Q -> D: 4
+  2 -> 3: 4
+  D -> B: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 4: 5 -> 6: 4
+  pos 1: M -> N: 4
+  pos 3: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 6: 4 -> 6: 4
+  pos 2: M -> H: 4
+  pos 2: W -> M: 3
+  pos 4: 5 -> 9: 3
+  pos 2: V -> Y: 3
+  pos 5: 6 -> 4: 3
+  pos 4: 6 -> 8: 3
+  pos 2: Q -> D: 3
+  pos 1: Q -> O: 3
+  pos 1: E -> C: 3
+  pos 6: 5 -> 9: 3
+  pos 3: 0 -> 8: 3
+  pos 4: C -> G: 3
+  pos 6: 2 -> 1: 3
+  pos 3: 8 -> 0: 3
+
+Epoch 37/45: Train Loss: 0.8654 | Val Loss: 0.2898 | Baseline Acc: 80.98% | MVCP Acc: 75.38% | LR: 9.80e-06
+  ✨ Accuracy Improved: 80.68% -> 80.98%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (80.98%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 38/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.912, slot=0.677, ris
+  📊 Epoch avg: Loss=0.8627 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 38)
+
+📊 Validation Results (Epoch 38):
+   Baseline (fused) accuracy : 80.68%
+   MVCP (per‑frame vote)     : 74.57%
+
+📊 Top Character Confusions (epoch):
+  6 -> 4: 9
+  8 -> 6: 8
+  5 -> 9: 7
+  Q -> D: 7
+  M -> N: 7
+  8 -> 0: 7
+  6 -> 8: 7
+  M -> H: 7
+  8 -> 9: 6
+  Y -> V: 6
+  V -> Y: 5
+  1 -> 3: 5
+  3 -> 2: 5
+  5 -> 6: 5
+  4 -> 6: 5
+  D -> B: 5
+  R -> B: 5
+  2 -> 1: 5
+  1 -> 2: 4
+  0 -> 2: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 2: M -> H: 6
+  pos 6: 6 -> 4: 5
+  pos 4: 5 -> 9: 4
+  pos 1: M -> N: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 3: 8 -> 6: 4
+  pos 1: V -> Y: 3
+  pos 3: 1 -> 3: 3
+  pos 4: 5 -> 6: 3
+  pos 3: 6 -> 5: 3
+  pos 5: 8 -> 0: 3
+  pos 4: 6 -> 8: 3
+  pos 2: M -> N: 3
+  pos 1: E -> C: 3
+  pos 6: 5 -> 9: 3
+  pos 0: Q -> B: 3
+  pos 4: C -> G: 3
+  pos 6: 2 -> 1: 3
+
+Epoch 38/45: Train Loss: 0.8627 | Val Loss: 0.2910 | Baseline Acc: 80.68% | MVCP Acc: 74.57% | LR: 7.69e-06
+  Patience: 1/10
+Ep 39/45: 100%|█| 1416/1416 [08:20<00:00,  2.83it/s, loss=0.87, slot=0.653, risk
+  📊 Epoch avg: Loss=0.8629 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 39)
+    🔍 [STUDENT Ep 39] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 39] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 39] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.54) | MVCP: ORC6817
+    🔍 [STUDENT Ep 39] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 39] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.58) | MVCP: LRA1832
+    🔍 [STUDENT Ep 39] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.41) | MVCP: AVE3880
+    🔍 [STUDENT Ep 39] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.53) | MVCP: AZL5022
+    🔍 [STUDENT Ep 39] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.53) | MVCP: FQV8047
+    🔍 [STUDENT Ep 39] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 39] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 39):
+   Baseline (fused) accuracy : 81.18%
+   MVCP (per‑frame vote)     : 74.87%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 9
+  5 -> 9: 7
+  5 -> 6: 7
+  6 -> 4: 7
+  1 -> 2: 6
+  3 -> 2: 6
+  8 -> 6: 6
+  9 -> 5: 6
+  4 -> 6: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  Q -> D: 6
+  M -> N: 5
+  Y -> V: 5
+  D -> B: 5
+  N -> H: 5
+  W -> V: 5
+  V -> Y: 4
+  6 -> 9: 4
+  0 -> 2: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 4: 5 -> 9: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 3: 6 -> 8: 4
+  pos 6: 1 -> 2: 3
+  pos 2: W -> M: 3
+  pos 4: 5 -> 6: 3
+  pos 6: 9 -> 5: 3
+  pos 1: M -> N: 3
+  pos 5: 8 -> 0: 3
+  pos 4: 6 -> 8: 3
+  pos 2: D -> O: 3
+  pos 1: E -> C: 3
+  pos 6: 4 -> 6: 3
+  pos 2: M -> H: 3
+  pos 0: Q -> B: 3
+  pos 2: N -> M: 3
+  pos 4: C -> G: 3
+  pos 1: N -> H: 3
+
+Epoch 39/45: Train Loss: 0.8629 | Val Loss: 0.2922 | Baseline Acc: 81.18% | MVCP Acc: 74.87% | LR: 5.82e-06
+  ✨ Accuracy Improved: 80.98% -> 81.18%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (81.18%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 40/45: 100%|█| 1416/1416 [08:16<00:00,  2.85it/s, loss=0.933, slot=0.715, ris
+  📊 Epoch avg: Loss=0.8586 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 40)
+    🔍 [STUDENT Ep 40] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 40] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.54) | MVCP: DQE3320
+    🔍 [STUDENT Ep 40] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.53) | MVCP: ORC6817
+    🔍 [STUDENT Ep 40] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 40] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.58) | MVCP: LRA1832
+    🔍 [STUDENT Ep 40] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.41) | MVCP: AVE3880
+    🔍 [STUDENT Ep 40] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.53) | MVCP: AZL5022
+    🔍 [STUDENT Ep 40] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.52) | MVCP: FQV8047
+    🔍 [STUDENT Ep 40] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 40] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+    🔍 [STUDENT Ep 40] Track: track_10114 | GT: AXK1580 | Fused: AXB1980 (conf=0.38) | MVCP: AXK1380
+    🔍 [STUDENT Ep 40] Track: track_10115 | GT: AQS1094 | Fused: AQS1094 (conf=0.54) | MVCP: AQS1094
+    🔍 [STUDENT Ep 40] Track: track_10117 | GT: AVX5540 | Fused: AVX5540 (conf=0.59) | MVCP: AVX5540
+    🔍 [STUDENT Ep 40] Track: track_10123 | GT: HPW9584 | Fused: HPN9584 (conf=0.48) | MVCP: HPW9584
+    🔍 [STUDENT Ep 40] Track: track_10128 | GT: JKR4017 | Fused: JKR2017 (conf=0.50) | MVCP: JKR2017
+    🔍 [STUDENT Ep 40] Track: track_10134 | GT: BBJ1227 | Fused: BBJ1221 (conf=0.50) | MVCP: BBJ1221
+    🔍 [STUDENT Ep 40] Track: track_10148 | GT: ANT0268 | Fused: ANT0268 (conf=0.57) | MVCP: ANT0268
+    🔍 [STUDENT Ep 40] Track: track_10153 | GT: KGL5248 | Fused: KGL5248 (conf=0.53) | MVCP: AGL5248
+    🔍 [STUDENT Ep 40] Track: track_10154 | GT: PCY4077 | Fused: PCY4073 (conf=0.55) | MVCP: PCY4073
+    🔍 [STUDENT Ep 40] Track: track_10162 | GT: AVW1229 | Fused: AVM1229 (conf=0.51) | MVCP: AVM1229
+
+📊 Validation Results (Epoch 40):
+   Baseline (fused) accuracy : 81.08%
+   MVCP (per‑frame vote)     : 74.37%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 8
+  5 -> 9: 7
+  3 -> 2: 7
+  5 -> 6: 7
+  M -> N: 7
+  6 -> 4: 7
+  1 -> 2: 6
+  8 -> 6: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  Q -> D: 6
+  4 -> 6: 6
+  V -> Y: 5
+  9 -> 5: 5
+  Y -> V: 5
+  M -> H: 5
+  D -> B: 5
+  0 -> 2: 4
+  0 -> 8: 4
+  O -> U: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 4: 5 -> 9: 4
+  pos 1: M -> N: 4
+  pos 6: 6 -> 4: 4
+  pos 3: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 2: M -> H: 4
+  pos 1: V -> Y: 3
+  pos 2: W -> N: 3
+  pos 3: 3 -> 2: 3
+  pos 4: 5 -> 6: 3
+  pos 6: 9 -> 5: 3
+  pos 4: 6 -> 8: 3
+  pos 2: D -> O: 3
+  pos 2: M -> N: 3
+  pos 2: O -> U: 3
+  pos 4: C -> G: 3
+  pos 1: N -> H: 3
+  pos 3: 8 -> 0: 3
+
+Epoch 40/45: Train Loss: 0.8586 | Val Loss: 0.2907 | Baseline Acc: 81.08% | MVCP Acc: 74.37% | LR: 4.22e-06
+  Patience: 1/10
+Ep 41/45: 100%|█| 1416/1416 [08:08<00:00,  2.90it/s, loss=0.817, slot=0.634, ris
+  📊 Epoch avg: Loss=0.8598 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 41)
+    🔍 [STUDENT Ep 41] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 41] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 41] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.53) | MVCP: ORC6817
+    🔍 [STUDENT Ep 41] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 41] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.58) | MVCP: LRA1832
+    🔍 [STUDENT Ep 41] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.42) | MVCP: AVE3880
+    🔍 [STUDENT Ep 41] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.54) | MVCP: AZL5022
+    🔍 [STUDENT Ep 41] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.52) | MVCP: FGV8047
+    🔍 [STUDENT Ep 41] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 41] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 41):
+   Baseline (fused) accuracy : 81.38%
+   MVCP (per‑frame vote)     : 74.87%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 9
+  6 -> 4: 8
+  3 -> 2: 7
+  5 -> 6: 7
+  M -> N: 7
+  V -> Y: 6
+  1 -> 2: 6
+  8 -> 6: 6
+  8 -> 9: 6
+  Q -> D: 6
+  4 -> 6: 6
+  5 -> 9: 5
+  8 -> 0: 5
+  0 -> 2: 5
+  Y -> V: 5
+  M -> H: 5
+  D -> B: 5
+  2 -> 1: 5
+  Q -> U: 4
+  0 -> 8: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 1: V -> Y: 4
+  pos 1: M -> N: 4
+  pos 3: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 2: M -> H: 4
+  pos 3: 3 -> 2: 3
+  pos 4: 5 -> 6: 3
+  pos 4: 5 -> 9: 3
+  pos 4: 6 -> 8: 3
+  pos 2: M -> N: 3
+  pos 1: E -> C: 3
+  pos 4: C -> G: 3
+  pos 6: 2 -> 1: 3
+  pos 1: N -> H: 3
+  pos 3: 8 -> 0: 3
+  pos 3: 8 -> 6: 3
+  pos 6: 1 -> 2: 2
+
+Epoch 41/45: Train Loss: 0.8598 | Val Loss: 0.2892 | Baseline Acc: 81.38% | MVCP Acc: 74.87% | LR: 2.90e-06
+  ✨ Accuracy Improved: 81.18% -> 81.38%
+  ⭐ Saved Best Model: pretrain_results/pretrain_stage1_best.pth (81.38%)
+📝 Saved 999 lines to pretrain_results/submission_pretrain_stage1.txt
+Ep 42/45: 100%|█| 1416/1416 [08:00<00:00,  2.95it/s, loss=0.907, slot=0.698, ris
+  📊 Epoch avg: Loss=0.8584 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 42)
+
+📊 Validation Results (Epoch 42):
+   Baseline (fused) accuracy : 81.18%
+   MVCP (per‑frame vote)     : 74.97%
+
+📊 Top Character Confusions (epoch):
+  6 -> 8: 9
+  3 -> 2: 8
+  6 -> 4: 8
+  5 -> 9: 7
+  M -> N: 7
+  1 -> 2: 6
+  5 -> 6: 6
+  8 -> 6: 6
+  4 -> 6: 6
+  8 -> 9: 6
+  Y -> V: 6
+  Q -> D: 6
+  V -> Y: 5
+  8 -> 0: 5
+  M -> H: 5
+  D -> B: 5
+  0 -> 2: 4
+  0 -> 8: 4
+  5 -> 0: 4
+  B -> R: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 4: 5 -> 9: 4
+  pos 3: 3 -> 2: 4
+  pos 1: M -> N: 4
+  pos 3: 6 -> 8: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 2: M -> H: 4
+  pos 2: W -> M: 3
+  pos 4: 5 -> 6: 3
+  pos 2: V -> Y: 3
+  pos 4: 6 -> 8: 3
+  pos 2: M -> N: 3
+  pos 1: E -> C: 3
+  pos 0: Q -> B: 3
+  pos 4: C -> G: 3
+  pos 1: N -> H: 3
+  pos 3: 8 -> 0: 3
+  pos 5: 0 -> 5: 3
+
+Epoch 42/45: Train Loss: 0.8584 | Val Loss: 0.2905 | Baseline Acc: 81.18% | MVCP Acc: 74.97% | LR: 1.85e-06
+  Patience: 1/10
+Ep 43/45: 100%|█| 1416/1416 [08:05<00:00,  2.91it/s, loss=0.965, slot=0.748, ris
+  📊 Epoch avg: Loss=0.8594 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 43)
+    🔍 [STUDENT Ep 43] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 43] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 43] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.54) | MVCP: ORC6817
+    🔍 [STUDENT Ep 43] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 43] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.58) | MVCP: LRA1832
+    🔍 [STUDENT Ep 43] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.41) | MVCP: AVE3880
+    🔍 [STUDENT Ep 43] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.54) | MVCP: AZL5022
+    🔍 [STUDENT Ep 43] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.53) | MVCP: FQV8047
+    🔍 [STUDENT Ep 43] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 43] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 43):
+   Baseline (fused) accuracy : 81.28%
+   MVCP (per‑frame vote)     : 75.28%
+
+📊 Top Character Confusions (epoch):
+  5 -> 9: 8
+  6 -> 4: 8
+  6 -> 8: 8
+  3 -> 2: 7
+  M -> N: 7
+  1 -> 2: 6
+  5 -> 6: 6
+  8 -> 6: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  Q -> D: 6
+  4 -> 6: 6
+  V -> Y: 5
+  Y -> V: 5
+  D -> B: 5
+  0 -> 2: 4
+  0 -> 8: 4
+  M -> H: 4
+  5 -> 0: 4
+  B -> R: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 4: 5 -> 9: 4
+  pos 1: M -> N: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 1: V -> Y: 3
+  pos 2: W -> M: 3
+  pos 3: 3 -> 2: 3
+  pos 4: 5 -> 6: 3
+  pos 4: 6 -> 8: 3
+  pos 2: M -> N: 3
+  pos 1: E -> C: 3
+  pos 2: M -> H: 3
+  pos 0: Q -> B: 3
+  pos 4: C -> G: 3
+  pos 1: N -> H: 3
+  pos 3: 8 -> 0: 3
+  pos 3: 6 -> 8: 3
+  pos 3: 8 -> 6: 3
+
+Epoch 43/45: Train Loss: 0.8594 | Val Loss: 0.2895 | Baseline Acc: 81.28% | MVCP Acc: 75.28% | LR: 1.10e-06
+  Patience: 2/10
+Ep 44/45: 100%|█| 1416/1416 [08:12<00:00,  2.87it/s, loss=0.798, slot=0.614, ris
+  📊 Epoch avg: Loss=0.8583 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 44)
+
+📊 Validation Results (Epoch 44):
+   Baseline (fused) accuracy : 80.98%
+   MVCP (per‑frame vote)     : 74.77%
+
+📊 Top Character Confusions (epoch):
+  3 -> 2: 8
+  6 -> 4: 8
+  5 -> 6: 7
+  8 -> 6: 7
+  M -> N: 7
+  6 -> 8: 7
+  1 -> 2: 6
+  5 -> 9: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  Y -> V: 6
+  Q -> D: 6
+  V -> Y: 5
+  4 -> 6: 5
+  M -> H: 5
+  D -> B: 5
+  N -> H: 5
+  W -> V: 5
+  5 -> 3: 4
+  9 -> 5: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 3: 3 -> 2: 4
+  pos 1: M -> N: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 2: M -> H: 4
+  pos 3: 8 -> 6: 4
+  pos 1: V -> Y: 3
+  pos 2: W -> M: 3
+  pos 4: 5 -> 6: 3
+  pos 4: 5 -> 9: 3
+  pos 6: 9 -> 5: 3
+  pos 4: 6 -> 8: 3
+  pos 2: M -> N: 3
+  pos 1: E -> C: 3
+  pos 6: 4 -> 6: 3
+  pos 2: D -> O: 3
+  pos 0: Q -> B: 3
+  pos 4: C -> G: 3
+  pos 1: N -> H: 3
+
+Epoch 44/45: Train Loss: 0.8583 | Val Loss: 0.2900 | Baseline Acc: 80.98% | MVCP Acc: 74.77% | LR: 6.51e-07
+  Patience: 3/10
+Ep 45/45: 100%|█| 1416/1416 [07:59<00:00,  2.95it/s, loss=0.864, slot=0.659, ris
+  📊 Epoch avg: Loss=0.8575 | Risk=0.0000 | Refine=0.0000
+🔍 VALIDATION USING BASE LOGITS (epoch 45)
+    🔍 [STUDENT Ep 45] Track: track_10007 | GT: AYG7579 | Fused: AYG7579 (conf=0.58) | MVCP: AYG7579
+    🔍 [STUDENT Ep 45] Track: track_10011 | GT: ODE3320 | Fused: DQE3320 (conf=0.55) | MVCP: DQE3320
+    🔍 [STUDENT Ep 45] Track: track_10018 | GT: DRC6817 | Fused: DRC6817 (conf=0.53) | MVCP: ORC6817
+    🔍 [STUDENT Ep 45] Track: track_10029 | GT: BAE8708 | Fused: BAE8708 (conf=0.57) | MVCP: BAE8708
+    🔍 [STUDENT Ep 45] Track: track_10047 | GT: LRA1832 | Fused: LRA1832 (conf=0.58) | MVCP: LRA1832
+    🔍 [STUDENT Ep 45] Track: track_10052 | GT: AVE1881 | Fused: AYE7882 (conf=0.42) | MVCP: AVE3880
+    🔍 [STUDENT Ep 45] Track: track_10068 | GT: AZL5022 | Fused: AZL5022 (conf=0.54) | MVCP: AZL5022
+    🔍 [STUDENT Ep 45] Track: track_10070 | GT: FQV8047 | Fused: FQV8047 (conf=0.52) | MVCP: FQV8047
+    🔍 [STUDENT Ep 45] Track: track_10090 | GT: AXR3781 | Fused: AXR3781 (conf=0.58) | MVCP: AXR3781
+    🔍 [STUDENT Ep 45] Track: track_10100 | GT: AKP0704 | Fused: AKP0704 (conf=0.60) | MVCP: AKP0704
+
+📊 Validation Results (Epoch 45):
+   Baseline (fused) accuracy : 81.08%
+   MVCP (per‑frame vote)     : 75.08%
+
+📊 Top Character Confusions (epoch):
+  5 -> 9: 8
+  6 -> 4: 8
+  3 -> 2: 7
+  M -> N: 7
+  4 -> 6: 7
+  6 -> 8: 7
+  1 -> 2: 6
+  5 -> 6: 6
+  8 -> 6: 6
+  8 -> 9: 6
+  8 -> 0: 6
+  Y -> V: 6
+  Q -> D: 6
+  V -> Y: 5
+  M -> H: 5
+  D -> B: 5
+  N -> H: 5
+  W -> V: 5
+  0 -> 2: 4
+  0 -> 8: 4
+
+📊 Top Position-Aware Confusions (epoch):
+  pos 6: 6 -> 4: 5
+  pos 4: 5 -> 9: 4
+  pos 1: M -> N: 4
+  pos 2: Y -> V: 4
+  pos 2: Q -> D: 4
+  pos 6: 4 -> 6: 4
+  pos 2: M -> H: 4
+  pos 1: V -> Y: 3
+  pos 2: W -> M: 3
+  pos 3: 3 -> 2: 3
+  pos 4: 5 -> 6: 3
+  pos 4: 6 -> 8: 3
+  pos 2: D -> O: 3
+  pos 2: M -> N: 3
+  pos 1: E -> C: 3
+  pos 0: Q -> B: 3
+  pos 4: C -> G: 3
+  pos 1: N -> H: 3
+  pos 3: 8 -> 0: 3
+  pos 1: W -> V: 3
+
+Epoch 45/45: Train Loss: 0.8575 | Val Loss: 0.2893 | Baseline Acc: 81.08% | MVCP Acc: 75.08% | LR: 5.00e-07
+  Patience: 4/10
+
+🎉 Done. Saved to: pretrain_results
